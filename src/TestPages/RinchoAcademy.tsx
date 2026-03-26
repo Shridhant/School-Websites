@@ -1,0 +1,339 @@
+import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "motion/react";
+
+const kidsUrl =
+  "https://morungexpress.com/uploads/2024/02/26992939_1708184002_IMG20240130105823.webp";
+
+const certificateUrl =
+  "https://static.wixstatic.com/media/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg/v1/fill/w_1000,h_559,al_c,q_85,usm_0.66_1.00_0.01/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg";
+
+const navItems = ["About", "Programs", "Community", "Events", "Contact"];
+
+const programs = [
+  "College Prep Program",
+  "STEM Learning",
+  "Arts & Expression",
+  "Languages Program",
+  "Humanities Program",
+];
+
+const highlights = [
+  {
+    title: "Academic Excellence",
+    body: "A disciplined learning culture that prepares students for higher studies and thoughtful leadership.",
+  },
+  {
+    title: "Experienced Faculty",
+    body: "Guided by committed educators who blend structure, care, and consistent academic mentoring.",
+  },
+  {
+    title: "Supportive Community",
+    body: "A school environment that values belonging, confidence, character, and meaningful participation.",
+  },
+];
+
+const events = [
+  {
+    title: "Senior Recognition Showcase",
+    meta: "May 2026 | Sovima Campus Hall",
+    image: certificateUrl,
+  },
+  {
+    title: "Community Learning Week",
+    meta: "June 2026 | Rincho Activity Wing",
+    image: kidsUrl,
+  },
+  {
+    title: "Admissions & Career Day",
+    meta: "July 2026 | Main Learning Block",
+    image: certificateUrl,
+  },
+];
+
+type RevealProps = {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+};
+
+function Reveal({ children, className, delay = 0 }: RevealProps) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function GridMark() {
+  return (
+    <div className="grid grid-cols-3 gap-2 text-[#20334e]">
+      {Array.from({ length: 9 }).map((_, index) => (
+        <div
+          key={index}
+          className={`h-7 w-7 border border-[#d9dee6] ${
+            index === 1 || index === 3 || index === 4 || index === 5 || index === 7 ? "border-[#20334e]" : ""
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function RinchoAcademy() {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <div className="min-h-screen bg-white text-[#152033]">
+      <div className="mx-auto min-h-screen overflow-hidden bg-white">
+        <header className="border-b border-[#edf1f6] px-8 py-7 lg:px-10">
+          <div className="flex flex-wrap items-center justify-between gap-6">
+            <a href="#top" className="font-serif text-[26px] tracking-[-0.04em] text-[#101827]">
+              Rincho Academy
+            </a>
+
+            <nav className="hidden items-center gap-7 text-[12px] font-medium text-[#556274] lg:flex">
+              {navItems.map((item) => (
+                <a key={item} href={`#${item.toLowerCase()}`} className="transition hover:text-[#101827]">
+                  {item}
+                </a>
+              ))}
+            </nav>
+
+            <a href="#contact" className="border-b border-[#101827] pb-1 text-[12px] font-semibold text-[#101827]">
+              Contact Us
+            </a>
+          </div>
+        </header>
+
+        <main id="top">
+          <section className="px-8 pb-12 pt-8 lg:px-10 lg:pb-16 lg:pt-10">
+            <div className="grid gap-10 lg:grid-cols-[0.95fr_0.75fr] lg:items-start">
+              <Reveal>
+                <div className="max-w-[520px]">
+                  <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#728097]">Established 2009</p>
+                  <h1 className="font-serif text-[52px] leading-[0.95] tracking-[-0.05em] text-[#111827] sm:text-[64px]">
+                    Discover Your Child&apos;s Education Potential
+                  </h1>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.1}>
+                <div className="space-y-5 pt-1 text-white">
+                  <p className="max-w-[280px] text-[13px] leading-7 text-[#677589]">
+                    RINCHO ACADEMY SCHOOL SOVIMA was established in 2009 and is a private unaided school located in
+                    Medziphema block of Dimapur district, Nagaland.
+                  </p>
+                  <a
+                    href="#programs"
+                    className="inline-flex items-center rounded-[2px] bg-[#11233d] px-6 py-3 text-[12px] font-semibold text-white transition hover:-translate-y-0.5"
+                  >
+                    Explore More
+                  </a>
+                </div>
+              </Reveal>
+            </div>
+
+            <Reveal className="mt-8" delay={0.14}>
+              <motion.img
+                src={kidsUrl}
+                alt="Students at Rincho Academy School Sovima"
+                className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[500px]"
+                whileHover={reduceMotion ? undefined : { scale: 1.01 }}
+                transition={{ duration: 0.4 }}
+              />
+            </Reveal>
+          </section>
+
+          <section id="about" className="px-8 py-12 lg:px-10 lg:py-16">
+            <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-start">
+              <Reveal>
+                <div className="grid gap-5 sm:grid-cols-[0.82fr_1fr]">
+                  <motion.div className="bg-[#132741] px-8 py-9 text-white" whileHover={reduceMotion ? undefined : { y: -4 }}>
+                    <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-white/55">About</p>
+                    <h2 className="font-serif text-[38px] leading-[1.02] tracking-[-0.04em]">
+                      Unleash student possibilities with us
+                    </h2>
+                  </motion.div>
+
+                  <div className="grid gap-5">
+                    <img src={kidsUrl} alt="Students together at school" className="h-[210px] w-full object-cover" />
+                    <img src={certificateUrl} alt="Students receiving certificates" className="h-[240px] w-full object-cover" />
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                <div className="flex h-full flex-col justify-between gap-10">
+                  <div className="flex justify-start lg:justify-end">
+                    <GridMark />
+                  </div>
+                  <div className="max-w-[420px]">
+                    <p className="text-[13px] leading-7 text-[#677589]">
+                      Unlocking every student&apos;s potential through a stimulating and supportive environment is at the
+                      heart of our school. We encourage discipline, curiosity, confidence, and growth in every learner.
+                    </p>
+                    <a href="#contact" className="mt-6 inline-flex border-b border-[#111827] pb-1 text-[12px] font-semibold text-[#111827]">
+                      Learn More
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          <section id="programs" className="border-t border-[#edf1f6] px-8 py-12 lg:px-10 lg:py-16">
+            <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+              <Reveal>
+                <div>
+                  <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#728097]">Programs</p>
+                  <h2 className="max-w-[10ch] font-serif text-[48px] leading-[0.98] tracking-[-0.05em] text-[#111827]">
+                    Student programs you can register here
+                  </h2>
+
+                  <ul className="mt-8 space-y-3 text-[17px] leading-7 text-[#a2acb9]">
+                    {programs.map((program, index) => (
+                      <li key={program} className={index === 0 ? "text-[#111827]" : ""}>
+                        <span className="mr-3">{index === 0 ? "-" : ""}</span>
+                        {program}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-10">
+                    <GridMark />
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                <div className="space-y-5">
+                  <img src={certificateUrl} alt="Students with certificates" className="h-[320px] w-full object-cover" />
+                  <div className="ml-auto max-w-[280px] bg-[#132741] px-6 py-5 text-white">
+                    <p className="text-[13px] leading-6 text-white/82">
+                      College-level confidence and recognition that encourage students to aim higher and celebrate achievement.
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          <section id="community" className="border-t border-[#edf1f6] px-8 py-12 lg:px-10 lg:py-16">
+            <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+              <Reveal>
+                <div className="relative overflow-hidden">
+                  <img src={kidsUrl} alt="Students learning together" className="h-[360px] w-full object-cover sm:h-[430px]" />
+                  <button
+                    type="button"
+                    className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#132741] shadow-lg"
+                    aria-label="Play campus video"
+                  >
+                    <span className="ml-1 text-xl">{">"}</span>
+                  </button>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                <div className="space-y-6">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#728097]">Community</p>
+                  <h2 className="max-w-[10ch] font-serif text-[48px] leading-[0.98] tracking-[-0.05em] text-[#111827]">
+                    A supportive environment where students grow together
+                  </h2>
+                  <p className="max-w-[40ch] text-[13px] leading-7 text-[#677589]">
+                    From classroom collaboration to recognition moments and public participation, the school encourages
+                    students to learn confidently and represent themselves with pride.
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          <section className="border-t border-[#edf1f6] bg-[#edf4fa] px-8 py-12 lg:px-10 lg:py-16">
+            <Reveal>
+              <div className="grid gap-8 md:grid-cols-3">
+                {highlights.map((item, index) => (
+                  <div key={item.title} className={index < highlights.length - 1 ? "md:border-r md:border-[#d8e1ea] md:pr-6" : ""}>
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#aebbc8] text-[#20334e]">
+                      <span className="text-sm">{index + 1}</span>
+                    </div>
+                    <h3 className="font-serif text-[22px] leading-tight text-[#111827]">{item.title}</h3>
+                    <p className="mt-3 text-[13px] leading-6 text-[#677589]">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </section>
+
+          <section id="events" className="border-t border-[#edf1f6] px-8 py-12 lg:px-10 lg:py-16">
+            <div className="grid gap-10 lg:grid-cols-[0.75fr_1fr]">
+              <Reveal>
+                <div>
+                  <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#728097]">Events</p>
+                  <h2 className="max-w-[8ch] font-serif text-[48px] leading-[0.98] tracking-[-0.05em] text-[#111827]">
+                    Join our next upcoming events
+                  </h2>
+
+                  <div className="mt-12">
+                    <GridMark />
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                <div className="space-y-5">
+                  {events.map((event) => (
+                    <motion.article
+                      key={event.title}
+                      className="grid gap-4 border-b border-[#edf1f6] pb-5 sm:grid-cols-[116px_1fr_auto]"
+                      whileHover={reduceMotion ? undefined : { x: 4 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <img src={event.image} alt={event.title} className="h-[86px] w-full object-cover sm:w-[116px]" />
+                      <div>
+                        <h3 className="font-serif text-[24px] leading-tight text-[#111827]">{event.title}</h3>
+                        <p className="mt-3 text-[12px] leading-6 text-[#677589]">{event.meta}</p>
+                      </div>
+                      <a href="#contact" className="self-start border-b border-[#111827] pb-1 text-[12px] font-semibold text-[#111827]">
+                        Learn More
+                      </a>
+                    </motion.article>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+          </section>
+        </main>
+
+        <footer id="contact" className="border-t border-white/10 bg-[#11233d] px-8 py-10 text-white lg:px-10">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-[560px]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-white/50">Rincho Academy School Sovima</p>
+              <h2 className="mt-4 font-serif text-[40px] leading-[1.02] tracking-[-0.04em]">
+                A private unaided school in Nagaland building steady foundations since 2009.
+              </h2>
+            </div>
+
+            <div className="space-y-2 text-sm text-white/74">
+              <p>Medziphema Block, Dimapur District, Nagaland</p>
+              <p>Community-focused learning, recognition, and student growth</p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+export default RinchoAcademy;
