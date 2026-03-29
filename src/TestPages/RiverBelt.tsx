@@ -335,9 +335,9 @@ function RiverBelt() {
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
                       <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-accent/5 opacity-0 blur-3xl transition-opacity duration-500 group-hover/pathway:opacity-100" />
-                      <div className={`relative mx-auto flex h-[220px] w-[220px] items-end justify-center overflow-hidden rounded-[38%] ${item.color} shadow-inner transition-transform duration-700 ease-out group-hover/pathway:scale-[1.03]`}>
+                      <div className={`relative mx-auto flex h-[220px] w-full max-w-[220px] items-end justify-center overflow-hidden ${item.color} shadow-inner transition-transform duration-700 ease-out group-hover/pathway:scale-[1.03]`}>
                         <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
-                        <div className="pointer-events-none absolute inset-0 rounded-[38%] shadow-[inset_0_4px_12px_rgba(255,255,255,0.4),inset_0_-8px_20px_rgba(0,0,0,0.15)]" />
+                        <div className="pointer-events-none absolute inset-0 shadow-[inset_0_4px_12px_rgba(255,255,255,0.35),inset_0_-8px_20px_rgba(0,0,0,0.12)]" />
                       </div>
                       <div className="relative z-10 mt-8 text-center">
                         <h3 className="text-[22px] font-semibold tracking-[-0.02em] text-headline">{item.title}</h3>
@@ -363,29 +363,31 @@ function RiverBelt() {
                     alt="School students event"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#ffd447] via-[#ffd447]/95 to-[#ffd447]/10" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#ffd447] via-[#ffd447]/98 via-52% to-[#ffd447]/15" />
                 </div>
 
                 <div className="relative z-10 flex h-full max-w-[420px] flex-col justify-center px-8 py-10 lg:px-12">
-                  <div className="mb-auto">
-                    <span className="inline-flex rounded-full bg-white/60 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#a68200] backdrop-blur-md">
-                      Confidence that lasts
-                    </span>
-                  </div>
-                  <h2 className="mt-10 font-display text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-headline lg:text-5xl">
-                    Empowering children to think bigger, kinder, and sharper.
-                  </h2>
-                  <p className="mt-5 text-base leading-relaxed text-headline/80">
-                    We help each child find their voice through active classrooms, gentle guidance, and meaningful routines.
-                  </p>
-                  <div className="mt-10">
-                    <a
-                      href="#admissions"
-                      className="group/btn relative inline-flex items-center overflow-hidden rounded-full bg-white px-7 py-4 text-sm font-bold text-headline shadow-[0_8px_16px_rgba(64,39,28,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(64,39,28,0.12)]"
-                    >
-                      <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-white">Start your visit</span>
-                      <div className="absolute inset-0 z-0 h-full w-full translate-y-full rounded-full bg-headline transition-transform duration-300 ease-in-out group-hover/btn:translate-y-0" />
-                    </a>
+                  <div className="max-w-[360px] rounded-[28px] bg-[#fff8de]/88 p-6 backdrop-blur-sm shadow-[0_14px_30px_rgba(64,39,28,0.08)] ring-1 ring-white/60 lg:p-7">
+                    <div className="mb-auto">
+                      <span className="inline-flex rounded-full bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#8f6800] shadow-sm">
+                        Confidence that lasts
+                      </span>
+                    </div>
+                    <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-[#2f1c11] lg:text-5xl">
+                      Empowering children to think bigger, kinder, and sharper.
+                    </h2>
+                    <p className="mt-5 max-w-[30ch] text-base leading-8 text-[#533726]">
+                      We help each child find their voice through active classrooms, gentle guidance, and meaningful routines.
+                    </p>
+                    <div className="mt-8">
+                      <a
+                        href="#admissions"
+                        className="group/btn relative inline-flex items-center overflow-hidden rounded-full bg-white px-7 py-4 text-sm font-bold text-headline shadow-[0_8px_16px_rgba(64,39,28,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(64,39,28,0.12)]"
+                      >
+                        <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-white">Start your visit</span>
+                        <div className="absolute inset-0 z-0 h-full w-full translate-y-full rounded-full bg-headline transition-transform duration-300 ease-in-out group-hover/btn:translate-y-0" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </motion.article>
