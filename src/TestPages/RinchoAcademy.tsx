@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useState, type ReactNode } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 
 const kidsUrl =
   "https://morungexpress.com/uploads/2024/02/26992939_1708184002_IMG20240130105823.webp";
@@ -10,11 +10,31 @@ const certificateUrl =
 const navItems = ["About", "Programs", "Community", "Events", "Contact"];
 
 const programs = [
-  "College Prep Program",
-  "STEM Learning",
-  "Arts & Expression",
-  "Languages Program",
-  "Humanities Program",
+  {
+    title: "College Prep Program",
+    image: certificateUrl,
+    description: "College-level confidence and recognition that encourage students to aim higher and celebrate achievement.",
+  },
+  {
+    title: "STEM Learning",
+    image: kidsUrl,
+    description: "Fostering analytical thinking, problem-solving, and hands-on experiments for future innovators.",
+  },
+  {
+    title: "Arts & Expression",
+    image: certificateUrl,
+    description: "Creative platforms for students to explore their artistic talents and express their unique perspectives.",
+  },
+  {
+    title: "Languages Program",
+    image: kidsUrl,
+    description: "Building communication skills and cultural appreciation through immersive language studies.",
+  },
+  {
+    title: "Humanities Program",
+    image: certificateUrl,
+    description: "Understanding human society, culture, and history to develop well-rounded, thoughtful citizens.",
+  },
 ];
 
 const highlights = [
@@ -76,23 +96,10 @@ function Reveal({ children, className, delay = 0 }: RevealProps) {
   );
 }
 
-function GridMark() {
-  return (
-    <div className="grid grid-cols-3 gap-2 text-[#20334e]">
-      {Array.from({ length: 9 }).map((_, index) => (
-        <div
-          key={index}
-          className={`h-7 w-7 border border-[#d9dee6] ${
-            index === 1 || index === 3 || index === 4 || index === 5 || index === 7 ? "border-[#20334e]" : ""
-          }`}
-        />
-      ))}
-    </div>
-  );
-}
 
 function RinchoAcademy() {
   const reduceMotion = useReducedMotion();
+  const [activeProgram, setActiveProgram] = useState(0);
 
   return (
     <div className="min-h-screen bg-white text-[#152033]">
@@ -176,9 +183,7 @@ function RinchoAcademy() {
 
               <Reveal delay={0.08}>
                 <div className="flex h-full flex-col justify-between gap-10">
-                  <div className="flex justify-start lg:justify-end">
-                    <GridMark />
-                  </div>
+               
                   <div className="max-w-[420px]">
                     <p className="text-[13px] leading-7 text-[#677589]">
                       Unlocking every student&apos;s potential through a stimulating and supportive environment is at the
@@ -203,28 +208,58 @@ function RinchoAcademy() {
                   </h2>
 
                   <ul className="mt-8 space-y-3 text-[17px] leading-7 text-[#a2acb9]">
-                    {programs.map((program, index) => (
-                      <li key={program} className={index === 0 ? "text-[#111827]" : ""}>
-                        <span className="mr-3">{index === 0 ? "-" : ""}</span>
-                        {program}
-                      </li>
-                    ))}
+                    {programs.map((program, index) => {
+                      const isActive = index === activeProgram;
+                      return (
+                        <li 
+                          key={program.title} 
+                          className={`cursor-pointer transition-colors duration-300 hover:text-[#111827] ${isActive ? "text-[#111827] font-medium" : ""}`}
+                          onClick={() => setActiveProgram(index)}
+                        >
+                          <span className={`mr-3 inline-block transition-transform duration-300 ${isActive ? "translate-x-1 font-bold text-[#111827]" : "text-transparent"}`}>-</span>
+                          {program.title}
+                        </li>
+                      );
+                    })}
                   </ul>
 
                   <div className="mt-10">
-                    <GridMark />
+                   
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={0.08}>
                 <div className="space-y-5">
-                  <img src={certificateUrl} alt="Students with certificates" className="h-[320px] w-full object-cover" />
-                  <div className="ml-auto max-w-[280px] bg-[#132741] px-6 py-5 text-white">
-                    <p className="text-[13px] leading-6 text-white/82">
-                      College-level confidence and recognition that encourage students to aim higher and celebrate achievement.
-                    </p>
+                  <div className="relative h-[320px] w-full overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.img 
+                        key={programs[activeProgram].title}
+                        src={programs[activeProgram].image} 
+                        alt={programs[activeProgram].title} 
+                        initial={{ opacity: 0, scale: 1.05 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="absolute inset-0 h-full w-full object-cover" 
+                      />
+                    </AnimatePresence>
                   </div>
+                  
+                  <AnimatePresence mode="wait">
+                    <motion.div 
+                      key={programs[activeProgram].description}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="ml-auto max-w-[280px] bg-[#132741] px-6 py-5 text-white"
+                    >
+                      <p className="text-[13px] leading-6 text-white/82">
+                        {programs[activeProgram].description}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </Reveal>
             </div>
@@ -285,9 +320,7 @@ function RinchoAcademy() {
                     Join our next upcoming events
                   </h2>
 
-                  <div className="mt-12">
-                    <GridMark />
-                  </div>
+                
                 </div>
               </Reveal>
 
