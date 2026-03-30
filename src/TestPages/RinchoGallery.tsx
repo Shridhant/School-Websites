@@ -1,16 +1,18 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
-const kidsUrl = "https://morungexpress.com/uploads/2024/02/26992939_1708184002_IMG20240130105823.webp";
-const certificateUrl = "https://static.wixstatic.com/media/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg/v1/fill/w_1000,h_559,al_c,q_85,usm_0.66_1.00_0.01/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg";
+const img1 = "/farewell/635011601_18112219954711423_4916731204348465775_n.webp";
+const img2 = "/farewell/637702567_18112219924711423_4716776516326184759_n.webp";
+const img3 = "/farewell/641137099_18112219966711423_5055730032556928064_n.webp";
+const img4 = "/farewell/641145181_18112219906711423_4709206404959339634_n.webp";
 
 const galleryImages = [
-  { id: 1, src: kidsUrl, alt: "Students in classroom", span: "col-span-1 row-span-1" },
-  { id: 2, src: certificateUrl, alt: "Graduation ceremony", span: "col-span-2 row-span-2" },
-  { id: 3, src: kidsUrl, alt: "Sports day event", span: "col-span-1 row-span-1" },
-  { id: 4, src: certificateUrl, alt: "Award winning moment", span: "col-span-1 row-span-1" },
-  { id: 5, src: kidsUrl, alt: "Cultural event", span: "col-span-1 row-span-2" },
-  { id: 6, src: certificateUrl, alt: "Science exhibition", span: "col-span-1 row-span-1" },
+  { id: 1, src: img1, alt: "Students in classroom", span: "col-span-1 row-span-1" },
+  { id: 2, src: img3, alt: "School event", span: "col-span-2 row-span-2" },
+  { id: 3, src: img2, alt: "Sports day event", span: "col-span-1 row-span-1" },
+  { id: 4, src: img4, alt: "Award winning moment", span: "col-span-1 row-span-1" },
+  { id: 5, src: img1, alt: "Cultural event", span: "col-span-1 row-span-2" },
+  { id: 6, src: img2, alt: "Science exhibition", span: "col-span-1 row-span-1" },
 ];
 
 function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {

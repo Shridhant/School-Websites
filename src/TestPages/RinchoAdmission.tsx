@@ -63,7 +63,7 @@ export default function RinchoAdmission() {
         
         <div className="grid gap-12 sm:grid-cols-2 relative">
           {/* Subtle line connecting the steps visually on larger screens */}
-          <div className="hidden sm:block absolute top-[28px] left-[15%] right-[15%] h-[1px] bg-[#d8e1ea] -z-0" />
+          <div className="hidden sm:block absolute top-[28px] left-[15%] right-[15%] h-px bg-[#d8e1ea] z-0" />
           
           {steps.map((step, index) => (
             <Reveal key={step.title} delay={index * 0.1} className="relative z-10">

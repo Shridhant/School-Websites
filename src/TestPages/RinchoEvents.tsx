@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { blogPosts } from "./RinchoData";
+import { eventsData } from "./RinchoData";
 
 function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const reduceMotion = useReducedMotion();
@@ -20,51 +20,51 @@ function Reveal({ children, className, delay = 0 }: { children: ReactNode; class
   );
 }
 
-export default function RinchoBlog() {
+export default function RinchoEvents() {
   const reduceMotion = useReducedMotion();
 
   return (
     <main className="px-8 py-16 lg:px-10 lg:py-24 bg-[#fafcff]">
       <Reveal>
         <div className="mb-16 max-w-2xl">
-          <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#728097]">School Blog</p>
+          <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#728097]">Campus Life</p>
           <h1 className="font-serif text-[48px] leading-[0.98] tracking-[-0.05em] text-[#111827] sm:text-[56px]">
-            Insights & Stories
+            School Events & Celebrations
           </h1>
           <p className="mt-6 text-[14px] leading-7 text-[#677589]">
-            Stay updated with the latest news, educational insights, and success stories from the vibrant community of Rincho Academy School.
+            The vibrant traditions that make up the school calendar at Rincho Academy. Explore the unique days we celebrate each year to build character, community, and joy.
           </p>
         </div>
       </Reveal>
 
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-        {blogPosts.map((post, i) => (
-          <Reveal key={post.title} delay={i * 0.1} className="group">
-            <Link to={`/rincho-academy/blog/${post.slug}`} className="block h-full">
-              <article className="flex flex-col sm:flex-row gap-6 bg-white p-5 rounded-md shadow-sm border border-[#edf1f6] transition-shadow duration-300 hover:shadow-md h-full">
-                <div className="h-[200px] w-full shrink-0 overflow-hidden sm:h-auto sm:w-[220px]">
+      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-14">
+        {eventsData.map((event, i) => (
+          <Reveal key={event.slug} delay={i * 0.1}>
+            <Link to={`/rincho-academy/events/${event.slug}`} className="group block h-full">
+              <article className="flex flex-col h-full bg-white rounded-md shadow-sm border border-[#edf1f6] overflow-hidden transition-shadow duration-300 hover:shadow-md">
+                <div className="relative h-[220px] w-full overflow-hidden">
                   <motion.img 
-                    src={post.image} 
-                    alt={post.title} 
-                    className="h-full w-full object-cover"
+                    src={event.coverImage} 
+                    alt={event.title} 
+                    className="absolute inset-0 h-full w-full object-cover"
                     whileHover={reduceMotion ? undefined : { scale: 1.05 }}
                     transition={{ duration: 0.4 }}
                   />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <div className="flex items-center gap-3 text-[11px] font-medium uppercase tracking-wider text-[#728097] mb-3">
-                    <span className="text-[#132741]">{post.category}</span>
-                    <span className="h-1 w-1 rounded-full bg-[#cbd3dd]" />
-                    <span>{post.date}</span>
+                  <div className="absolute top-4 left-4 inline-block rounded-sm bg-[#11233d]/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                    {event.date}
                   </div>
+                </div>
+                
+                <div className="flex flex-col flex-1 p-6">
                   <h2 className="font-serif text-[24px] leading-tight text-[#111827] mb-3 group-hover:text-[#132741] transition-colors">
-                    {post.title}
+                    {event.title}
                   </h2>
-                  <p className="text-[13px] leading-6 text-[#677589] line-clamp-2 mb-4">
-                    {post.excerpt}
+                  <p className="text-[13px] leading-6 text-[#677589] line-clamp-3 mb-6">
+                    {event.description}
                   </p>
+                  
                   <div className="mt-auto border-b max-w-fit border-[#111827] pb-0.5 text-[12px] font-semibold text-[#111827] group-hover:border-[#132741]">
-                    Read Article
+                    View Event Details
                   </div>
                 </div>
               </article>

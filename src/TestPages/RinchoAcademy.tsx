@@ -1,36 +1,35 @@
 import { useState, type ReactNode } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 
-const kidsUrl =
-  "https://morungexpress.com/uploads/2024/02/26992939_1708184002_IMG20240130105823.webp";
-
-const certificateUrl =
-  "https://static.wixstatic.com/media/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg/v1/fill/w_1000,h_559,al_c,q_85,usm_0.66_1.00_0.01/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg";
+const img1 = "/farewell/635011601_18112219954711423_4916731204348465775_n.webp";
+const img2 = "/farewell/637702567_18112219924711423_4716776516326184759_n.webp";
+const img3 = "/farewell/641137099_18112219966711423_5055730032556928064_n.webp";
+const img4 = "/farewell/641145181_18112219906711423_4709206404959339634_n.webp";
 
 const programs = [
   {
     title: "College Prep Program",
-    image: certificateUrl,
+    image: img1,
     description: "College-level confidence and recognition that encourage students to aim higher and celebrate achievement.",
   },
   {
     title: "STEM Learning",
-    image: kidsUrl,
+    image: img2,
     description: "Fostering analytical thinking, problem-solving, and hands-on experiments for future innovators.",
   },
   {
     title: "Arts & Expression",
-    image: certificateUrl,
+    image: img3,
     description: "Creative platforms for students to explore their artistic talents and express their unique perspectives.",
   },
   {
     title: "Languages Program",
-    image: kidsUrl,
+    image: img4,
     description: "Building communication skills and cultural appreciation through immersive language studies.",
   },
   {
     title: "Humanities Program",
-    image: certificateUrl,
+    image: img1,
     description: "Understanding human society, culture, and history to develop well-rounded, thoughtful citizens.",
   },
 ];
@@ -54,17 +53,17 @@ const events = [
   {
     title: "Senior Recognition Showcase",
     meta: "May 2026 | Sovima Campus Hall",
-    image: certificateUrl,
+    image: img2,
   },
   {
     title: "Community Learning Week",
     meta: "June 2026 | Rincho Activity Wing",
-    image: kidsUrl,
+    image: img3,
   },
   {
     title: "Admissions & Career Day",
     meta: "July 2026 | Main Learning Block",
-    image: certificateUrl,
+    image: img4,
   },
 ];
 
@@ -130,7 +129,7 @@ function RinchoAcademy() {
 
             <Reveal className="mt-8" delay={0.14}>
               <motion.img
-                src={kidsUrl}
+                src={img3}
                 alt="Students at Rincho Academy School Sovima"
                 className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[500px]"
                 whileHover={reduceMotion ? undefined : { scale: 1.01 }}
@@ -151,8 +150,8 @@ function RinchoAcademy() {
                   </motion.div>
 
                   <div className="grid gap-5">
-                    <img src={kidsUrl} alt="Students together at school" className="h-[210px] w-full object-cover" />
-                    <img src={certificateUrl} alt="Students receiving certificates" className="h-[240px] w-full object-cover" />
+                    <img src={img1} alt="Students together at school" className="h-[210px] w-full object-cover" />
+                    <img src={img4} alt="Students receiving certificates" className="h-[240px] w-full object-cover" />
                   </div>
                 </div>
               </Reveal>
@@ -245,7 +244,7 @@ function RinchoAcademy() {
             <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
               <Reveal>
                 <div className="relative overflow-hidden">
-                  <img src={kidsUrl} alt="Students learning together" className="h-[360px] w-full object-cover sm:h-[430px]" />
+                  <img src={img2} alt="Students learning together" className="h-[360px] w-full object-cover sm:h-[430px]" />
                   <button
                     type="button"
                     className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#132741] shadow-lg"
