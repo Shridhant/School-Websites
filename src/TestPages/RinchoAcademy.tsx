@@ -5,6 +5,8 @@ const img1 = "/farewell/635011601_18112219954711423_4916731204348465775_n.webp";
 const img2 = "/farewell/637702567_18112219924711423_4716776516326184759_n.webp";
 const img3 = "/farewell/641137099_18112219966711423_5055730032556928064_n.webp";
 const img4 = "/farewell/641145181_18112219906711423_4709206404959339634_n.webp";
+const img5 = "/enviroment day/502312108_18087571648711423_5983120228586142295_n.webp";
+const img6 = "/enviroment day/510462423_18087571696711423_740283401773004717_n.webp";
 
 const programs = [
   {
@@ -14,22 +16,22 @@ const programs = [
   },
   {
     title: "STEM Learning",
-    image: img2,
+    image: "https://scontent.fdel1-6.fna.fbcdn.net/v/t39.30808-6/541646457_801380482245391_3943225790384192610_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_ohc=RpRWzT0ZTB0Q7kNvwGk4D47&_nc_oc=Adr7O_MtgOakHliH8IZMslclrKb82871X3KGLEmxhg2wpDwJg5eTHAAGf9Ww45NPOvs&_nc_zt=23&_nc_ht=scontent.fdel1-6.fna&_nc_gid=ybmD8r4YIze9ek6jFkB_9Q&_nc_ss=7a3a8&oh=00_Afx_ElQ-tdQuaLlPp-UeVh8IK0rCfaLqc9HZ6S3Zbb4kHA&oe=69CFF758",
     description: "Fostering analytical thinking, problem-solving, and hands-on experiments for future innovators.",
   },
   {
     title: "Arts & Expression",
-    image: img3,
+    image: "https://scontent.fdel1-2.fna.fbcdn.net/v/t39.30808-6/518332031_765112909205482_480187747894984698_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=7b2446&_nc_ohc=YS6_sANiNGMQ7kNvwF5m3Nm&_nc_oc=Adrl8rBehkxzuZO2YZ0jXExURSeXskdhHeVvOQvex5i03eDlLnYOoZYOHPG73GTfP80&_nc_zt=23&_nc_ht=scontent.fdel1-2.fna&_nc_gid=SrIUik-Gn0kjLMS_I1HMtA&_nc_ss=7a3a8&oh=00_Afzm_4DPq5-nQrV2mX-unWiu9uaNug3vObMeqo_6YpTAYg&oe=69CFDB9D",
     description: "Creative platforms for students to explore their artistic talents and express their unique perspectives.",
   },
   {
     title: "Languages Program",
-    image: img4,
+    image: img6,
     description: "Building communication skills and cultural appreciation through immersive language studies.",
   },
   {
     title: "Humanities Program",
-    image: img1,
+    image: "https://scontent.fdel1-6.fna.fbcdn.net/v/t39.30808-6/481770098_666740649042709_1183904950860168377_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_ohc=kRLrSl5Y_roQ7kNvwHY25W6&_nc_oc=AdoUCetIjMns1IYJkC05jQmN1EGm7YwiUY3MMZT1fwDiRCbUxlIMS1Gtk-wRpMeDlf8&_nc_zt=23&_nc_ht=scontent.fdel1-6.fna&_nc_gid=tuh1pikzce1-SrTOfb8WhQ&_nc_ss=7a3a8&oh=00_AfxiO8SH1gT7BpU0vueuR8Tz0sgaDAmblDrKJrK6-b7MEg&oe=69CFD851",
     description: "Understanding human society, culture, and history to develop well-rounded, thoughtful citizens.",
   },
 ];
