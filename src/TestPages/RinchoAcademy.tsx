@@ -7,8 +7,6 @@ const kidsUrl =
 const certificateUrl =
   "https://static.wixstatic.com/media/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg/v1/fill/w_1000,h_559,al_c,q_85,usm_0.66_1.00_0.01/eb559e_bfb9653e6dc94792b53f51915a852e0d~mv2.jpeg";
 
-const navItems = ["About", "Programs", "Community", "Events", "Contact"];
-
 const programs = [
   {
     title: "College Prep Program",
@@ -102,29 +100,7 @@ function RinchoAcademy() {
   const [activeProgram, setActiveProgram] = useState(0);
 
   return (
-    <div className="min-h-screen bg-white text-[#152033]">
-      <div className="mx-auto min-h-screen overflow-hidden bg-white">
-        <header className="border-b border-[#edf1f6] px-8 py-7 lg:px-10">
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            <a href="#top" className="font-serif text-[26px] tracking-[-0.04em] text-[#101827]">
-              Rincho Academy
-            </a>
-
-            <nav className="hidden items-center gap-7 text-[12px] font-medium text-[#556274] lg:flex">
-              {navItems.map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`} className="transition hover:text-[#101827]">
-                  {item}
-                </a>
-              ))}
-            </nav>
-
-            <a href="#contact" className="border-b border-[#101827] pb-1 text-[12px] font-semibold text-[#101827]">
-              Contact Us
-            </a>
-          </div>
-        </header>
-
-        <main id="top">
+    <main id="top">
           <section className="px-8 pb-12 pt-8 lg:px-10 lg:pb-16 lg:pt-10">
             <div className="grid gap-10 lg:grid-cols-[0.95fr_0.75fr] lg:items-start">
               <Reveal>
@@ -348,24 +324,6 @@ function RinchoAcademy() {
             </div>
           </section>
         </main>
-
-        <footer id="contact" className="border-t border-white/10 bg-[#11233d] px-8 py-10 text-white lg:px-10">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-[560px]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-white/50">Rincho Academy School Sovima</p>
-              <h2 className="mt-4 font-serif text-[40px] leading-[1.02] tracking-[-0.04em]">
-                A private unaided school in Nagaland building steady foundations since 2009.
-              </h2>
-            </div>
-
-            <div className="space-y-2 text-sm text-white/74">
-              <p>Medziphema Block, Dimapur District, Nagaland</p>
-              <p>Community-focused learning, recognition, and student growth</p>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
   );
 }
 
