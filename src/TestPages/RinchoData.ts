@@ -24,7 +24,7 @@ Join us in encouraging our students to step out of their comfort zones and engag
     date: "March 15, 2026",
     category: "Student Life",
     author: "Jane Doe",
-    image: img1,
+    image: "https://scontent.fdel1-4.fna.fbcdn.net/v/t39.30808-6/482205268_666086629108111_6796669080985953484_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=AMkEZJVSIbgQ7kNvwE4pYJ5&_nc_oc=AdpNXzkj9PZKUCSh63j4TSFu7C9jdkFqOwuC5HkC2fBKT3PQBgh3lQsxhedNWy2OmpQ&_nc_zt=23&_nc_ht=scontent.fdel1-4.fna&_nc_gid=rr6TU-gN7fxVU4dATpUGeQ&_nc_ss=7a3a8&oh=00_AfwUrpgoTX6ZgiMhr1WY2Scg9L2mZNazLYrjveQCyX1F-g&oe=69CFD143",
   },
   {
     slug: "parents-guide-upcoming-exams",
@@ -47,7 +47,7 @@ Remember, your belief in their abilities can be their strongest motivation. Toge
     date: "February 28, 2026",
     category: "Academics",
     author: "Admin Team",
-    image: img2,
+    image: "https://scontent.fdel1-4.fna.fbcdn.net/v/t39.30808-6/481454826_665888592461248_5171831027408400414_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=MypHURsFoO8Q7kNvwGumlBQ&_nc_oc=Adpkt49v1Pu6V3fDCbzQwDhlMnYk5rDjjkHHVCDfZCUft16Ye1Lmx2mWIgDjnA06wBY&_nc_zt=23&_nc_ht=scontent.fdel1-4.fna&_nc_gid=F3ANAvz3QiYtt_Lj0q-VYQ&_nc_ss=7a3a8&oh=00_AfxhRVUx0xRaPNBRctd0CjGIKVZ_XKkz0FeLdMZlsuwl6w&oe=69CFE913",
   },
   {
     slug: "highlights-annual-science-fair",
@@ -66,7 +66,7 @@ The Science Fair is more than just a competition; it is a celebration of curiosi
     date: "February 10, 2026",
     category: "Events",
     author: "Science Dept",
-    image: img3,
+    image: "https://scontent.fdel1-7.fna.fbcdn.net/v/t39.30808-6/481915573_666079995775441_2921314702256012840_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_ohc=rIrkJnIxbIoQ7kNvwGGor12&_nc_oc=AdrUj3u7kH8rgjLZQDy14K3JrB3K4mwFaCRt8VC3sP3qr7wlPhVpnbo-Z33dYRitgqc&_nc_zt=23&_nc_ht=scontent.fdel1-7.fna&_nc_gid=meXNjN8CWXTKNsyVU5tQVw&_nc_ss=7a3a8&oh=00_Afynu0xmx1cbYamg1WP1_pDrTSjNTLqPtbyvOrc7jxwZAQ&oe=69CFDE10",
   },
   {
     slug: "importance-of-community-service",
@@ -88,7 +88,7 @@ These experiences often stick with students for a lifetime, shaping their values
     date: "January 22, 2026",
     category: "Community",
     author: "John Smith",
-    image: img4,
+    image: "https://scontent.fdel1-8.fna.fbcdn.net/v/t39.30808-6/481182096_665888872461220_6167723275962691146_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_ohc=LkbHfa64_GgQ7kNvwFKYDFZ&_nc_oc=Adovh-u1lJssnNfpxs2wiqHWznzDzggLrl17-92E0oU5zh9LnS1iChrSjPvt9J6k9g4&_nc_zt=23&_nc_ht=scontent.fdel1-8.fna&_nc_gid=Fz_cMzvbiZBLCoC1CqMyAw&_nc_ss=7a3a8&oh=00_AfxuWrc7yvN_eM3_b5GEvBxN-2DaoUk3XbOGZEaJ3hq_0g&oe=69CFD03A",
   },
 ];
 
@@ -109,7 +109,7 @@ export const eventsData = [
     timing: "8:00 AM - 4:00 PM",
     description: "Physical fitness and teamwork are core to our curriculum. Sports Day brings our houses together in healthy competition, celebrating athleticism, teamwork, and school spirit.",
     images: [img3, img4, img1],
-    coverImage: img3,
+    coverImage: "https://scontent.fdel1-5.fna.fbcdn.net/v/t39.30808-6/480660133_657002930016481_86995410937099154_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_ohc=0x5YOuR881QQ7kNvwGu5MPc&_nc_oc=AdoM5PVNIqQQ98_Fm5FVd3AttB6bEo0srYBFVxyqrNbGxCBr9JJKS3NXqQHIMxTxQaA&_nc_zt=23&_nc_ht=scontent.fdel1-5.fna&_nc_gid=toz-KEIAZ9Y-uBbu966dkg&_nc_ss=7a3a8&oh=00_AfyaBTmBPxkeDucoAVZgU9qHZtHhvX61NvAih0zMaRkEYQ&oe=69CFE9BD",
   },
   {
     slug: "cultural-day",
@@ -117,8 +117,8 @@ export const eventsData = [
     date: "August 12",
     timing: "9:00 AM - 3:00 PM",
     description: "A vibrant celebration of the diverse heritage representing our student body. We celebrate Cultural Day to promote tolerance, cultural appreciation, and unity in diversity.",
-    images: [img2, img3, img1],
-    coverImage: img2,
+    images: ["https://scontent.fdel1-4.fna.fbcdn.net/v/t39.30808-6/482205268_666086629108111_6796669080985953484_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=AMkEZJVSIbgQ7kNvwE4pYJ5&_nc_oc=AdpNXzkj9PZKUCSh63j4TSFu7C9jdkFqOwuC5HkC2fBKT3PQBgh3lQsxhedNWy2OmpQ&_nc_zt=23&_nc_ht=scontent.fdel1-4.fna&_nc_gid=rr6TU-gN7fxVU4dATpUGeQ&_nc_ss=7a3a8&oh=00_AfwUrpgoTX6ZgiMhr1WY2Scg9L2mZNazLYrjveQCyX1F-g&oe=69CFD143", "https://scontent.fdel1-7.fna.fbcdn.net/v/t39.30808-6/481915573_666079995775441_2921314702256012840_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_ohc=rIrkJnIxbIoQ7kNvwGGor12&_nc_oc=AdrUj3u7kH8rgjLZQDy14K3JrB3K4mwFaCRt8VC3sP3qr7wlPhVpnbo-Z33dYRitgqc&_nc_zt=23&_nc_ht=scontent.fdel1-7.fna&_nc_gid=meXNjN8CWXTKNsyVU5tQVw&_nc_ss=7a3a8&oh=00_Afynu0xmx1cbYamg1WP1_pDrTSjNTLqPtbyvOrc7jxwZAQ&oe=69CFDE10", "https://scontent.fdel1-4.fna.fbcdn.net/v/t39.30808-6/482205268_666086629108111_6796669080985953484_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=AMkEZJVSIbgQ7kNvwE4pYJ5&_nc_oc=AdpNXzkj9PZKUCSh63j4TSFu7C9jdkFqOwuC5HkC2fBKT3PQBgh3lQsxhedNWy2OmpQ&_nc_zt=23&_nc_ht=scontent.fdel1-4.fna&_nc_gid=rr6TU-gN7fxVU4dATpUGeQ&_nc_ss=7a3a8&oh=00_AfwUrpgoTX6ZgiMhr1WY2Scg9L2mZNazLYrjveQCyX1F-g&oe=69CFD143"],
+    coverImage: "https://scontent.fdel1-4.fna.fbcdn.net/v/t39.30808-6/482205268_666086629108111_6796669080985953484_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=AMkEZJVSIbgQ7kNvwE4pYJ5&_nc_oc=AdpNXzkj9PZKUCSh63j4TSFu7C9jdkFqOwuC5HkC2fBKT3PQBgh3lQsxhedNWy2OmpQ&_nc_zt=23&_nc_ht=scontent.fdel1-4.fna&_nc_gid=rr6TU-gN7fxVU4dATpUGeQ&_nc_ss=7a3a8&oh=00_AfwUrpgoTX6ZgiMhr1WY2Scg9L2mZNazLYrjveQCyX1F-g&oe=69CFD143",
   },
   {
     slug: "teachers-day",
@@ -127,7 +127,7 @@ export const eventsData = [
     timing: "11:00 AM - 1:00 PM",
     description: "A day entirely dedicated to our educators. Students take the lead in organizing events and tributes to express gratitude for the tireless dedication of our teaching staff.",
     images: [img4, img1, img2],
-    coverImage: img4,
+    coverImage: "https://scontent.fdel1-5.fna.fbcdn.net/v/t39.30808-6/480773396_1194892488639227_7353054480229671712_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_ohc=A8c_cWwv2rgQ7kNvwG10yG5&_nc_oc=AdqF6FcS8DQT2WlmA7yZyfi9itHAZM2RZyyoe3epiOyZqGn-Qw-TvJDyQmR8pVZLCZ0&_nc_zt=23&_nc_ht=scontent.fdel1-5.fna&_nc_gid=xvlHggGJdFxAp-AcQ-064Q&_nc_ss=7a3a8&oh=00_AfxB2fBvcKI1Dk6ocdYl4wAutppPzuUfA0l_tB7eHTNU3w&oe=69CFE5B9",
   },
   {
     slug: "childrens-day",
@@ -136,7 +136,7 @@ export const eventsData = [
     timing: "9:30 AM - 2:00 PM",
     description: "A joyous celebration focused entirely on our students! Teachers plan performances, games, and feasts to celebrate the potential and happiness of every child at our academy.",
     images: [img1, img3, img4],
-    coverImage: img1,
+    coverImage: "https://scontent.fdel1-4.fna.fbcdn.net/v/t39.30808-6/481260402_665888685794572_5265987746991930546_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=x8CAgKx-zy0Q7kNvwEliijJ&_nc_oc=Ado6h7aOB7NoiTbu30I9FTqcjgaA4NVn1oc2nspMhcoiog462bDbS2r9fPOmvYN_Xmc&_nc_zt=23&_nc_ht=scontent.fdel1-4.fna&_nc_gid=YX3QFmmXvk8_VqfuYmMZNg&_nc_ss=7a3a8&oh=00_AfyZ-X45qIuI4gK8Nxim4cEYgBuUCqrkRbC6tu4o4wZv4w&oe=69CFEFB9",
   },
   {
     slug: "environment-day",
@@ -145,7 +145,7 @@ export const eventsData = [
     timing: "8:30 AM - 12:30 PM",
     description: "We mark this day with tree plantation drives and awareness campaigns. It is crucial to teach the next generation the importance of ecological balance and sustainability.",
     images: [img3, img2, img1],
-    coverImage: img3,
+    coverImage: "https://scontent.fdel1-2.fna.fbcdn.net/v/t39.30808-6/480943034_657244719992302_422357106585339400_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_ohc=yURFIJ2tVrYQ7kNvwFKfkTR&_nc_oc=Adolwj21DlFEMD-TiobQRW0cg1mQAVE69UT6d9FS27UoEaKqOrybWpjBfmQJ5j2jVXM&_nc_zt=23&_nc_ht=scontent.fdel1-2.fna&_nc_gid=q7UKPDPj3hYp9kIqocKLxw&_nc_ss=7a3a8&oh=00_AfwAe97j1v_XZKFEO_p2e2jo17INu5TjUH7w91pFYyjTBg&oe=69CFEB2D",
   },
   {
     slug: "advent-christmas",

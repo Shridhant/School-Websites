@@ -129,7 +129,7 @@ function RinchoAcademy() {
 
             <Reveal className="mt-8" delay={0.14}>
               <motion.img
-                src={img3}
+                src="https://morungexpress.com/uploads/2024/02/26992939_1708184002_IMG20240130105823.webp"
                 alt="Students at Rincho Academy School Sovima"
                 className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[500px]"
                 whileHover={reduceMotion ? undefined : { scale: 1.01 }}
@@ -150,8 +150,8 @@ function RinchoAcademy() {
                   </motion.div>
 
                   <div className="grid gap-5">
-                    <img src={img1} alt="Students together at school" className="h-[210px] w-full object-cover" />
-                    <img src={img4} alt="Students receiving certificates" className="h-[240px] w-full object-cover" />
+                    <img src="https://morungexpress.com/uploads/2024/02/21496052_1708184021_IMG20240131105216.jpg" alt="Students together at school" className="h-[210px] w-full object-cover" />
+                    <img src="https://scontent.fdel1-5.fna.fbcdn.net/v/t39.30808-6/482075210_666086319108142_6836433277508297973_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_ohc=_Pm8n-s7zS4Q7kNvwGDPuMk&_nc_oc=AdpVf6t8kdgFY1vHjMVsNWEVHgw1jCG9USVBaS0V2NKAhUwK1P4q6gziMjHAP2yroXw&_nc_zt=23&_nc_ht=scontent.fdel1-5.fna&_nc_gid=jMSsBSjl-FkjYovCl86Mew&_nc_ss=7a3a8&oh=00_Afw4PFlMeYXBPkJ2KSppMt2i4GRF5JBbGPkpdyt6HFFCqA&oe=69CFF3B7" alt="Students receiving certificates" className="h-[240px] w-full object-cover" />
                   </div>
                 </div>
               </Reveal>
