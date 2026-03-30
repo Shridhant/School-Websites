@@ -13,21 +13,21 @@ const LOGO =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN6xhPcR1eKTMDh9-1Rv3DCTF8M3PfLgO5Ow&s";
 
 const IMG = {
-  hero:    "https://picsum.photos/seed/rb-hero/900/680",
-  heroMini:"https://picsum.photos/seed/rb-mini/340/260",
-  prog1:   "https://picsum.photos/seed/rb-prog1/800/560",
-  prog2:   "https://picsum.photos/seed/rb-prog2/560/420",
-  prog3:   "https://picsum.photos/seed/rb-prog3/560/420",
-  path1:   "https://picsum.photos/seed/rb-track1/480/380",
-  path2:   "https://picsum.photos/seed/rb-track2/480/380",
-  path3:   "https://picsum.photos/seed/rb-track3/480/380",
-  path4:   "https://picsum.photos/seed/rb-track4/480/380",
-  philos:  "https://picsum.photos/seed/rb-phil/760/700",
-  cam1:    "https://picsum.photos/seed/rb-cam1/560/700",
-  cam2:    "https://picsum.photos/seed/rb-cam2/380/340",
-  cam3:    "https://picsum.photos/seed/rb-cam3/380/340",
-  cam4:    "https://picsum.photos/seed/rb-cam4/380/280",
-  cam5:    "https://picsum.photos/seed/rb-cam5/560/280",
+  hero:    "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.06%20(2).jpeg",
+  heroMini:"/enviroementriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.26.08%20(1).jpeg",
+  prog1:   "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.03.jpeg",
+  prog2:   "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.04%20(1).jpeg",
+  prog3:   "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.05.jpeg",
+  path1:   "/enviroementriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.26.07.jpeg",
+  path2:   "/enviroementriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.26.07%20(1).jpeg",
+  path3:   "/enviroementriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.26.07%20(2).jpeg",
+  path4:   "/enviroementriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.26.08.jpeg",
+  philos:  "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.06%20(1).jpeg",
+  cam1:    "/enviroementriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.26.08%20(1).jpeg",
+  cam2:    "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.04.jpeg",
+  cam3:    "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.05%20(1).jpeg",
+  cam4:    "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.06.jpeg",
+  cam5:    "/sportsdayriverbelt/WhatsApp%20Image%202026-03-28%20at%2018.22.06%20(2).jpeg",
 };
 
 // ─── Content ─────────────────────────────────────────────────────────────────
@@ -169,8 +169,6 @@ function GridPattern({ className = "" }: { className?: string }) {
 }
 
 // ─── Animation Wrapper ────────────────────────────────────────────────────────
-
-const EASE_SPRING = { type: "spring", stiffness: 220, damping: 22 } as const;
 
 function Reveal({
   children,
@@ -706,7 +704,7 @@ function PathwaysSection() {
               >
                 {/* Background image */}
                 <img
-                  src={path.img || ""}
+                  src={IMG[`path${i + 1}` as keyof typeof IMG] || ""}
                   alt={path.title}
                   className="absolute inset-0 w-full h-full object-cover opacity-[0.12] group-hover:opacity-[0.22] group-hover:scale-105 transition-all duration-500"
                 />
