@@ -1,603 +1,1172 @@
-import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useRef, useState, useEffect, type ReactNode } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "motion/react";
 
-const logoUrl =
+// ─── Assets ──────────────────────────────────────────────────────────────────
+
+const LOGO =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN6xhPcR1eKTMDh9-1Rv3DCTF8M3PfLgO5Ow&s";
 
-const handmadeChartsUrl =
-  "https://scontent.fdel27-4.fna.fbcdn.net/v/t39.30808-6/473222247_931980692370046_4411166791598062172_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e06c5d&_nc_ohc=-HS19lgWJ0oQ7kNvwH6Oj0u&_nc_oc=Adr7SI_23Chpx3Ks0rMm1dCy6y-Iw70gYSGhIkbnOxuJpcewk9poXIn25EjbXOXoxao&_nc_zt=23&_nc_ht=scontent.fdel27-4.fna&_nc_gid=18hLem16EeHMdeq_bRj8rQ&_nc_ss=7a32e&oh=00_Afxf6-rbV9EPYg6vjA5eshU9KujLiJwg7aCIw_DHthvh0w&oe=69C95E87";
+const IMG = {
+  hero:    "https://picsum.photos/seed/rb-hero/900/680",
+  heroMini:"https://picsum.photos/seed/rb-mini/340/260",
+  prog1:   "https://picsum.photos/seed/rb-prog1/800/560",
+  prog2:   "https://picsum.photos/seed/rb-prog2/560/420",
+  prog3:   "https://picsum.photos/seed/rb-prog3/560/420",
+  path1:   "https://picsum.photos/seed/rb-track1/480/380",
+  path2:   "https://picsum.photos/seed/rb-track2/480/380",
+  path3:   "https://picsum.photos/seed/rb-track3/480/380",
+  path4:   "https://picsum.photos/seed/rb-track4/480/380",
+  philos:  "https://picsum.photos/seed/rb-phil/760/700",
+  cam1:    "https://picsum.photos/seed/rb-cam1/560/700",
+  cam2:    "https://picsum.photos/seed/rb-cam2/380/340",
+  cam3:    "https://picsum.photos/seed/rb-cam3/380/340",
+  cam4:    "https://picsum.photos/seed/rb-cam4/380/280",
+  cam5:    "https://picsum.photos/seed/rb-cam5/560/280",
+};
 
-const schoolFlagUrl =
-  "https://scontent.fdel27-4.fna.fbcdn.net/v/t39.30808-6/473291661_931980922370023_2324845101091590219_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e06c5d&_nc_ohc=OTBmTFfxDlcQ7kNvwHXGxc5&_nc_oc=Adq6NEBZuc20ktm3cQC1NatsaZ84WkF_ioImMuAVywB9yO1pOIuKI3DWbA3eoHrkql4&_nc_zt=23&_nc_ht=scontent.fdel27-4.fna&_nc_gid=18hLem16EeHMdeq_bRj8rQ&_nc_ss=7a32e&oh=00_AfyZ0pcLJcotadKLhnDbNYNZQ_eeEB7nB3aRPjhEawJtCg&oe=69C96C8D";
+// ─── Content ─────────────────────────────────────────────────────────────────
 
-const interhouseEventUrl =
-  "https://content.jdmagicbox.com/v2/comp/dimapur/m4/9999p3862.3862.171002205610.i5m4/catalogue/river-belt-school-full-nagarjan-dimapur-schools-fDV8LQQ3jU.jpg";
-
-const navigation = ["About", "Programs", "Campus Life", "Admissions", "Contact"];
-
-const heroPills = ["Creative curriculum", "Admissions open 2026", "Safe campus"];
-
-const stats = [
-  { value: "98%", label: "Parents report stronger confidence and curiosity at home." },
-  { value: "24+", label: "Studios, labs, and outdoor zones designed for active learning." },
-  { value: "12:1", label: "Learner-to-mentor ratio for thoughtful classroom attention." },
+const TICKER_ITEMS = [
+  "98% Parent Satisfaction",
+  "24+ Learning Zones",
+  "12:1 Mentor Ratio",
+  "Award-Winning Curriculum",
+  "Safe Campus Promise",
+  "Admissions Open 2026",
+  "Rooted in Excellence",
 ];
 
-const programs = [
+const PROGRAMS = [
   {
     title: "Life Skills Lab",
-    description: "Project-based learning that builds confidence, empathy, and daily independence.",
-    image: handmadeChartsUrl,
-    accent: "from-[#ff8d4d] to-[#ffb272]",
+    tag: "Practical Learning",
+    description:
+      "Project-based routines that build confidence, empathy, and everyday independence in every child.",
+    img: IMG.prog1,
+    large: true,
   },
   {
     title: "Imagination Studio",
-    description: "Storytelling, science, and maker challenges that turn curiosity into action.",
-    image: schoolFlagUrl,
-    accent: "from-[#1d8a57] to-[#50b375]",
+    tag: "Creative Thinking",
+    description:
+      "Storytelling, science, and maker challenges that turn curiosity into real-world action.",
+    img: IMG.prog2,
+    large: false,
   },
   {
     title: "Future Leaders",
-    description: "Communication, teamwork, and leadership moments woven into every term.",
-    image: interhouseEventUrl,
-    accent: "from-[#4a9ce8] to-[#7bc1ff]",
+    tag: "Leadership & Growth",
+    description:
+      "Communication, teamwork, and leadership moments woven into every term of the year.",
+    img: IMG.prog3,
+    large: false,
   },
 ];
 
-const pathways = [
+const PATHWAYS = [
+  { title: "Letter Adventure",    grade: "Ages 3 – 5",  icon: "✦", color: "#c9860a", bg: "#fff8eb", border: "#f5e0a0" },
+  { title: "Reading Circle",      grade: "Ages 6 – 8",  icon: "◎", color: "#1a7a5e", bg: "#e8f7f2", border: "#a8dece" },
+  { title: "World Explorer",      grade: "Ages 9 – 11", icon: "⊕", color: "#2d4fb8", bg: "#eef0fb", border: "#b4beed" },
+  { title: "Art & Design Studio", grade: "Ages 12+",    icon: "◈", color: "#b84030", bg: "#fef0ec", border: "#f0b8ad" },
+];
+
+const TESTIMONIALS = [
   {
-    title: "Letter Adventure",
-    grade: "Pre-primary",
-    color: "bg-[#7ed8ff]",
-    image: handmadeChartsUrl,
+    quote: "River Belt gave our daughter more than education — it gave her the courage to try new things and love doing them.",
+    name: "Priya Sharma",
+    role: "Parent of Grade 4 student",
+    initials: "PS",
+    color: "#c9860a",
   },
   {
-    title: "Reading Circle",
-    grade: "Junior grades",
-    color: "bg-[#ff9d67]",
-    image: schoolFlagUrl,
+    quote: "The mentor ratio is real. Our son's teacher knows him deeply — not just his grades, but his curiosity and his fears.",
+    name: "James & Rachel Fernandez",
+    role: "Parents of Grade 6 student",
+    initials: "JF",
+    color: "#1a7a5e",
   },
   {
-    title: "World Explorer",
-    grade: "Middle years",
-    color: "bg-[#67c98a]",
-    image: interhouseEventUrl,
-  },
-  {
-    title: "Art & Design",
-    grade: "Creative hub",
-    color: "bg-[#ffd34d]",
-    image: handmadeChartsUrl,
+    quote: "I've never seen a campus where children genuinely look forward to Monday mornings. River Belt created that magic.",
+    name: "Dr. Anjali Nair",
+    role: "Parent of two River Belt children",
+    initials: "AN",
+    color: "#2d4fb8",
   },
 ];
 
-const featureCards = [
-  {
-    eyebrow: "Confidence-first",
-    title: "A brighter future starts with brave little steps.",
-    description: "We design joyful routines that help every child feel seen, capable, and ready to try.",
-    cta: "Book a tour",
-    tone: "bg-[#ffd54f]",
-  },
-  {
-    eyebrow: "Dream big",
-    title: "Mentors who turn curiosity into momentum.",
-    description: "From reading corners to robotics tables, children are encouraged to build and present.",
-    cta: "Explore learning",
-    tone: "bg-[#ff7b4a]",
-  },
-];
-
-const footerColumns = [
-  {
-    title: "Explore",
-    items: ["Early Years", "Primary School", "Clubs & Events", "School Calendar"],
-  },
-  {
-    title: "School",
-    items: ["About Us", "Faculty", "Admissions", "Campus Life"],
-  },
-  {
-    title: "Support",
-    items: ["FAQs", "Transport", "Contact", "Parent Portal"],
-  },
-];
-
-type RevealProps = {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
+const FOOTER_LINKS: Record<string, string[]> = {
+  Explore: ["About River Belt", "Our Programs", "Pathways", "Philosophy"],
+  School:  ["Campus Tour", "Admissions", "Events", "Notices"],
+  Support: ["Contact Us", "Parent Portal", "Careers", "Privacy Policy"],
 };
 
-function Reveal({ children, className, delay = 0 }: RevealProps) {
-  const reduceMotion = useReducedMotion();
+// ─── Easing ───────────────────────────────────────────────────────────────────
 
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
+const EASE_EXPO = [0.16, 1, 0.3, 1] as const;
 
+// ─── Decorative Components ────────────────────────────────────────────────────
+
+function DotPattern({ className = "", dark = false }: { className?: string; dark?: boolean }) {
+  const dot = dark
+    ? "rgba(255,255,255,0.07)"
+    : "rgba(12,19,50,0.055)";
+  return (
+    <div
+      aria-hidden
+      className={`absolute inset-0 pointer-events-none ${className}`}
+      style={{
+        backgroundImage: `radial-gradient(circle, ${dot} 1px, transparent 1px)`,
+        backgroundSize: "28px 28px",
+      }}
+    />
+  );
+}
+
+function LeafAccent({
+  className = "",
+  color = "rgba(200,134,10,0.14)",
+}: {
+  className?: string;
+  color?: string;
+}) {
+  return (
+    <svg
+      aria-hidden
+      className={`absolute pointer-events-none ${className}`}
+      width="160"
+      height="200"
+      viewBox="0 0 160 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M80 10 C130 38,148 88,134 138 C120 188,66 210,38 178 C10 146,8 96,28 56 C48 16,80 10,80 10 Z"
+        fill={color}
+      />
+      <line x1="80" y1="10" x2="80" y2="200" stroke={color} strokeWidth="1.2" strokeDasharray="4 7" />
+    </svg>
+  );
+}
+
+function GridPattern({ className = "" }: { className?: string }) {
+  return (
+    <div
+      aria-hidden
+      className={`absolute inset-0 pointer-events-none ${className}`}
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(12,19,50,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(12,19,50,0.04) 1px, transparent 1px)",
+        backgroundSize: "48px 48px",
+      }}
+    />
+  );
+}
+
+// ─── Animation Wrapper ────────────────────────────────────────────────────────
+
+const EASE_SPRING = { type: "spring", stiffness: 220, damping: 22 } as const;
+
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const prefersReduced = useReducedMotion();
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 32 }}
+      initial={prefersReduced ? false : { opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.65, ease: EASE_EXPO, delay }}
     >
       {children}
     </motion.div>
   );
 }
 
-function RiverBelt() {
-  const reduceMotion = useReducedMotion();
+// ─── Page Loader ──────────────────────────────────────────────────────────────
+
+function PageLoader({ onDone }: { onDone: () => void }) {
+  const [count, setCount] = useState(0);
+  const [leaving, setLeaving] = useState(false);
+
+  useEffect(() => {
+    const seen = sessionStorage.getItem("rb-v3-loaded");
+    if (seen) { onDone(); return; }
+    let frame = 0;
+    const total = 46;
+    const id = setInterval(() => {
+      frame++;
+      setCount(Math.round((frame / total) * 100));
+      if (frame >= total) {
+        clearInterval(id);
+        setTimeout(() => setLeaving(true), 200);
+      }
+    }, 40);
+    return () => clearInterval(id);
+  }, [onDone]);
 
   return (
-    <div className="min-h-screen bg-paper text-ink">
-      <div className="mx-auto min-h-screen overflow-hidden bg-paper">
-        <header className="sticky top-0 z-50 border-b border-line/50 bg-paper/80 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-[1120px] items-center justify-between gap-6 px-6 py-5 lg:px-10">
-            <a href="#top" className="group flex items-center gap-3 text-headline transition-transform hover:-translate-y-0.5">
-              <img src={logoUrl} alt="River Belt School logo" className="h-[46px] w-[46px] rounded-full object-cover shadow-sm ring-1 ring-black/5" />
-              <span className="font-display text-[28px] font-semibold tracking-[-0.04em]">
-                RiverBelt<span className="text-accent transition-colors group-hover:text-[#ff844d]">.</span>
-              </span>
+    <motion.div
+      className="fixed inset-0 z-[999] flex flex-col items-center justify-center overflow-hidden rb-root"
+      style={{ background: "var(--rb-navy)" }}
+      animate={leaving ? { y: "-100%" } : { y: 0 }}
+      transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1] }}
+      onAnimationComplete={() => {
+        if (leaving) {
+          sessionStorage.setItem("rb-v3-loaded", "1");
+          onDone();
+        }
+      }}
+    >
+      <DotPattern dark />
+      <div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: 500, height: 500,
+          top: "50%", left: "50%",
+          transform: "translate(-50%,-50%)",
+          background: "radial-gradient(circle, rgba(232,160,24,0.12) 0%, transparent 70%)",
+        }}
+      />
+      <motion.div
+        className="relative z-10 text-center"
+        initial={{ opacity: 0, scale: 0.88 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: EASE_EXPO }}
+      >
+        <div
+          style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase",
+            color: "var(--rb-amber)", opacity: 0.65, fontFamily: "var(--rb-font-sans)", marginBottom: 20 }}
+        >
+          River Belt School
+        </div>
+        <div
+          className="rb-display tabular-nums font-semibold leading-none"
+          style={{ fontSize: 96, color: "var(--rb-amber)" }}
+        >
+          {String(count).padStart(2, "0")}
+        </div>
+        <div style={{ marginTop: 28, width: 192, height: 1, background: "rgba(255,255,255,0.1)", margin: "28px auto 0" }}>
+          <div style={{ height: "100%", width: `${count}%`, background: "var(--rb-amber)", transition: "width 40ms linear" }} />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-5">
+      <motion.div
+        className="w-full max-w-4xl rounded-full px-4 py-2.5 flex items-center justify-between gap-4"
+        animate={{
+          background: scrolled ? "rgba(255,255,255,0.94)" : "rgba(255,255,255,0.7)",
+          boxShadow: scrolled
+            ? "0 4px 32px rgba(12,19,50,0.1), 0 0 0 1px rgba(12,19,50,0.07)"
+            : "0 0 0 1px rgba(12,19,50,0.07)",
+        }}
+        style={{ backdropFilter: "blur(20px)" }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="flex items-center gap-2.5 shrink-0">
+          <img src={LOGO} alt="River Belt" className="h-7 w-7 rounded-full object-cover" />
+          <span className="rb-display text-sm font-semibold" style={{ color: "var(--rb-text)" }}>
+            River Belt
+          </span>
+        </div>
+
+        <div className="hidden md:flex items-center gap-7">
+          {["About", "Programs", "Campus", "Admissions"].map((link) => (
+            <a
+              key={link}
+              href={`#${link.toLowerCase()}`}
+              className="text-[13px] font-medium transition-colors duration-200"
+              style={{ color: "var(--rb-muted)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--rb-text)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--rb-muted)")}
+            >
+              {link}
             </a>
+          ))}
+        </div>
 
-            <nav className="hidden items-center gap-8 text-sm font-semibold text-muted lg:flex">
-              {navigation.map((item) => (
-                <a key={item} href={`#${item.toLowerCase().replace(/\s+/g, "-")}`} className="transition-colors hover:text-headline">
-                  {item}
-                </a>
-              ))}
-            </nav>
+        <div className="flex items-center gap-3">
+          <a
+            href="#admissions"
+            className="hidden md:flex items-center px-5 py-2 rounded-full text-[13px] font-semibold transition-all duration-200"
+            style={{ background: "var(--rb-navy)", color: "#fff" }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--rb-navy-hover)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "var(--rb-navy)";
+              e.currentTarget.style.transform = "";
+            }}
+          >
+            Apply Now
+          </a>
+          <button
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-full transition-colors"
+            style={{ background: "rgba(12,19,50,0.06)", color: "var(--rb-text)" }}
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Menu"
+          >
+            {mobileOpen ? "✕" : "☰"}
+          </button>
+        </div>
+      </motion.div>
 
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.97 }}
+            transition={{ duration: 0.22, ease: EASE_EXPO }}
+            className="absolute top-[72px] left-4 right-4 rounded-3xl p-6"
+            style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(24px)",
+              boxShadow: "0 8px 48px rgba(12,19,50,0.12)", border: "1px solid rgba(12,19,50,0.07)" }}
+          >
+            {["About", "Programs", "Campus", "Admissions"].map((link) => (
+              <a
+                key={link}
+                href={`#${link.toLowerCase()}`}
+                className="flex items-center py-3 text-base font-medium border-b"
+                style={{ color: "var(--rb-text)", borderColor: "rgba(12,19,50,0.07)" }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link}
+              </a>
+            ))}
             <a
               href="#admissions"
-              className="group/ebtn relative inline-flex items-center overflow-hidden rounded-full bg-headline px-7 py-4 text-sm font-bold text-white shadow-lg transition-transform hover:-translate-y-1"
+              className="mt-4 flex justify-center py-3 rounded-full font-semibold text-sm"
+              style={{ background: "var(--rb-navy)", color: "#fff" }}
+              onClick={() => setMobileOpen(false)}
             >
-              <div className="absolute inset-0 z-0 h-full w-full translate-y-full rounded-full bg-white transition-transform duration-300 ease-in-out group-hover/ebtn:translate-y-0" />
-              <span className="text-white relative z-10 transition-colors duration-300 group-hover/ebtn:text-headline">Apply Now</span>
+              Apply Now
             </a>
-          </div>
-        </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}
 
-        <main id="top">
-          <section className="relative overflow-hidden px-6 pb-12 pt-10 lg:px-10 lg:pb-16 lg:pt-14">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(circle_at_top,rgba(255,175,96,0.18),transparent_65%)]" />
-            <div className="pointer-events-none absolute -left-10 top-20 h-28 w-28 rounded-full bg-[#ffcf66]/60 blur-2xl" />
-            <div className="pointer-events-none absolute right-10 top-24 h-32 w-32 rounded-full bg-[#7ad7f0]/40 blur-3xl" />
+// ─── Hero ─────────────────────────────────────────────────────────────────────
 
-            <div className="mx-auto grid max-w-[1120px] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-              <Reveal className="space-y-8">
-                <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-4 py-2 text-sm font-bold text-accent backdrop-blur-md ring-1 ring-accent/10">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
-                  </span>
-                  Admissions for 2026 are now open
-                </div>
+function HeroSection() {
+  const prefersReduced = useReducedMotion();
 
-                <div className="space-y-6">
-                  <h1 className="max-w-[12ch] font-display text-5xl font-semibold leading-[1.05] tracking-[-0.04em] text-headline sm:text-6xl lg:text-[76px]">
-                    Where bright children grow brave, kind, and future ready.
-                  </h1>
-                  <p className="max-w-[58ch] text-base leading-relaxed text-headline/75 sm:text-lg">
-                    River Belt School pairs playful discovery with deep academic care, creating a campus where children
-                    learn with confidence, build character, and fall in love with progress.
-                  </p>
-                </div>
+  return (
+    <section
+      className="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden px-6"
+      style={{ background: "var(--rb-bg)" }}
+    >
+      <GridPattern />
 
-                <div className="flex flex-wrap gap-3">
-                  {heroPills.map((item) => (
-                    <span key={item} className="rounded-full border border-line bg-white/60 px-4 py-2 text-sm font-semibold text-headline backdrop-blur-md">
-                      {item}
-                    </span>
-                  ))}
-                </div>
+      {/* Amber radial glow */}
+      <div className="absolute rounded-full pointer-events-none" style={{
+        width: 600, height: 600, top: "-160px", right: "-160px",
+        background: "radial-gradient(circle, rgba(232,160,24,0.1) 0%, transparent 68%)",
+      }} />
+      {/* Teal glow */}
+      <div className="absolute rounded-full pointer-events-none" style={{
+        width: 400, height: 400, bottom: "-100px", left: "-100px",
+        background: "radial-gradient(circle, rgba(26,144,112,0.08) 0%, transparent 68%)",
+      }} />
 
-                <div className="flex flex-wrap items-center gap-4">
-                  <a
-                    href="#programs"
-                    className="group/btn relative inline-flex items-center justify-center overflow-hidden rounded-full bg-[linear-gradient(135deg,#ff844d,#ffb24f)] px-8 py-4 text-sm font-bold text-white shadow-[0_12px_24px_rgba(255,132,77,0.3)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(255,132,77,0.4)]"
-                  >
-                    <div className="absolute inset-x-0 top-0 h-px bg-white/40" />
-                    <span className="relative z-10">Discover Programs</span>
-                  </a>
-                  <a
-                    href="#about"
-                    className="inline-flex items-center justify-center rounded-full border-2 border-line-strong bg-white/50 px-8 py-4 text-sm font-bold text-headline backdrop-blur-md transition-all hover:-translate-y-1 hover:border-headline hover:bg-white hover:shadow-lg"
-                  >
-                    Visit the Campus
-                  </a>
-                </div>
-              </Reveal>
+      <LeafAccent className="top-[18%] right-[6%] opacity-60" color="rgba(201,134,10,0.14)" />
+      <LeafAccent className="bottom-[12%] left-[4%] opacity-40 rotate-[55deg]" color="rgba(26,144,112,0.1)" />
 
-              <Reveal className="relative" delay={0.12}>
-                <div className="relative mx-auto grid max-w-[540px] gap-5 sm:grid-cols-2">
-                  <motion.article
-                    className="group relative overflow-hidden rounded-[36px] bg-[#8ad95f] p-4 pt-12 shadow-[0_24px_48px_rgba(74,110,36,0.2)] ring-1 ring-black/5"
-                    animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
-                    transition={reduceMotion ? undefined : { duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                    whileHover={reduceMotion ? undefined : { y: -8, scale: 1.02 }}
-                  >
-                    <div className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#35632a]">
-                      Joyful Start
-                    </div>
-                    <img
-                      src={schoolFlagUrl}
-                      alt="River Belt School children standing together with the school flag"
-                      className="h-[360px] w-full rounded-[28px] object-cover object-top transition duration-500 group-hover:scale-[1.03]"
-                    />
-                  </motion.article>
+      <div className="relative z-10 w-full max-w-290 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-20 items-center">
+        {/* Left */}
+        <div>
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_EXPO, delay: 0.1 }}
+            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 text-[13px] font-medium"
+            style={{ background: "rgba(201,134,10,0.1)", border: "1px solid rgba(201,134,10,0.22)",
+              color: "var(--rb-amber)" }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--rb-amber)" }} />
+            Admissions Open for 2026–27
+          </motion.div>
 
-                  <div className="flex flex-col gap-5 pt-6 sm:pt-14">
-                    <motion.article
-                      className="overflow-hidden rounded-[32px] bg-[#ffd44e] p-4 shadow-[0_20px_40px_rgba(191,142,22,0.18)] ring-1 ring-black/5"
-                      animate={reduceMotion ? undefined : { y: [0, 12, 0] }}
-                      transition={reduceMotion ? undefined : { duration: 7, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.6 }}
-                      whileHover={reduceMotion ? undefined : { y: -5, scale: 1.02 }}
-                    >
-                      <img
-                        src={handmadeChartsUrl}
-                        alt="River Belt School students holding handmade charts"
-                        className="h-[250px] w-full rounded-[24px] object-cover object-top"
-                      />
-                    </motion.article>
+          <motion.h1
+            className="rb-display font-semibold leading-[1.04] mb-6"
+            style={{ fontSize: "clamp(2.8rem,5.8vw,5rem)", color: "var(--rb-text)" }}
+            initial={prefersReduced ? false : { opacity: 0, y: 44 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, ease: EASE_EXPO, delay: 0.2 }}
+          >
+            Where every child{" "}
+            <em style={{ color: "var(--rb-amber)", fontStyle: "italic" }}>discovers</em>{" "}
+            their inner greatness.
+          </motion.h1>
 
-                    <motion.div
-                      className="rounded-[32px] bg-white p-6 shadow-[0_18px_36px_rgba(64,39,28,0.08)] ring-1 ring-black/5"
-                      whileHover={reduceMotion ? undefined : { y: -5 }}
-                    >
-                      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Why parents choose us</p>
-                      <p className="mt-3 text-base leading-7 text-muted">
-                        Warm mentors, safe spaces, expressive arts, and a learning rhythm that balances structure with delight.
-                      </p>
-                    </motion.div>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
+          <motion.p
+            className="text-[17px] leading-[1.75] mb-10 max-w-[440px]"
+            style={{ color: "var(--rb-muted)" }}
+            initial={prefersReduced ? false : { opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: EASE_EXPO, delay: 0.35 }}
+          >
+            River Belt School nurtures bright, curious minds through inspired teaching,
+            creative exploration, and a safe, joyful campus where every learner thrives.
+          </motion.p>
 
-            <Reveal className="mx-auto mt-12 max-w-[1120px]" delay={0.18}>
-              <div className="grid overflow-hidden rounded-[40px] bg-headline text-white shadow-2xl ring-1 ring-black/5 md:grid-cols-3">
-                {stats.map((item, index) => (
-                  <motion.div
-                    key={item.value}
-                    className={`group relative flex flex-col justify-between overflow-hidden px-8 py-10 transition-colors hover:bg-white/5 lg:px-12 ${index < stats.length - 1 ? "border-b border-white/10 md:border-b-0 md:border-r" : ""}`}
-                    whileHover={reduceMotion ? undefined : { y: -4 }}
-                  >
-                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
-                    <p className="font-display text-5xl font-semibold tracking-[-0.04em]">{item.value}</p>
-                    <p className="mt-4 max-w-[28ch] text-base leading-relaxed text-white/75">{item.label}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </Reveal>
-          </section>
+          <motion.div
+            className="flex flex-wrap gap-3 mb-12"
+            initial={prefersReduced ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_EXPO, delay: 0.45 }}
+          >
+            <a
+              href="#programs"
+              className="px-7 py-3.5 rounded-full font-semibold text-sm transition-all duration-200"
+              style={{ background: "var(--rb-navy)", color: "#fff" }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--rb-navy-hover)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--rb-navy)"; e.currentTarget.style.transform = ""; }}
+            >
+              Explore Programs
+            </a>
+            <a
+              href="#admissions"
+              className="px-7 py-3.5 rounded-full font-medium text-sm transition-all duration-200"
+              style={{ background: "transparent", border: "1.5px solid rgba(12,19,50,0.18)", color: "var(--rb-text)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(12,19,50,0.05)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = ""; }}
+            >
+              Schedule a Visit
+            </a>
+          </motion.div>
 
-          <section id="programs" className="px-6 py-12 lg:px-10 lg:py-16">
-            <div className="mx-auto max-w-[1120px]">
-              <Reveal className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                <div className="max-w-[640px]">
-                  <p className="text-sm font-semibold uppercase tracking-[0.22em] text-accent">Learn with lift</p>
-                  <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em] text-headline sm:text-5xl">
-                    Smart and spirited kids, ready to rise high.
-                  </h2>
-                </div>
-                <p className="max-w-[380px] text-base leading-7 text-muted">
-                  Every program mixes strong academics with expression, movement, collaboration, and reflective thinking.
-                </p>
-              </Reveal>
-
-              <div className="mt-10 grid gap-6 lg:grid-cols-3">
-                {programs.map((program, index) => (
-                  <Reveal key={program.title} delay={0.08 * index}>
-                    <motion.article 
-                      className={`group/program relative overflow-hidden rounded-[40px] bg-gradient-to-br ${program.accent} p-4 text-white shadow-[0_16px_32px_rgba(0,0,0,0.08)] ring-1 ring-white/20 transition-shadow hover:shadow-[0_24px_48px_rgba(0,0,0,0.15)]`}
-                      whileHover={reduceMotion ? undefined : { y: -6, scale: 0.995 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    >
-                      <div className="relative overflow-hidden rounded-[32px]">
-                        <img
-                          src={program.image}
-                          alt={program.title}
-                          className="h-[360px] w-full object-cover transition-transform duration-700 ease-out group-hover/program:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-500 group-hover/program:opacity-90" />
-                        <div className="absolute inset-x-0 bottom-0 p-8">
-                          <h3 className="font-display text-4xl font-semibold leading-[1.05] tracking-[-0.04em]">{program.title}</h3>
-                          <p className="mt-4 max-w-[28ch] text-sm leading-relaxed text-white/85 opacity-90 transition-opacity duration-300 group-hover/program:opacity-100">{program.description}</p>
-                        </div>
-                      </div>
-                    </motion.article>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section id="about" className="px-6 py-12 lg:px-10 lg:py-16">
-            <div className="mx-auto max-w-[1120px] text-center">
-              <Reveal>
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-accent">One impactful lesson at a time</p>
-                <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em] text-headline sm:text-5xl">
-                  Shaping the future of kids through joyful mastery.
-                </h2>
-              </Reveal>
-
-              <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-                {pathways.map((item, index) => (
-                  <Reveal key={item.title} delay={0.08 * index}>
-                    <motion.article
-                      className="group/pathway relative overflow-hidden rounded-[40px] bg-white p-7 shadow-[0_12px_24px_rgba(0,0,0,0.04)] ring-1 ring-black/5 transition-shadow hover:shadow-[0_24px_48px_rgba(0,0,0,0.12)]"
-                      whileHover={reduceMotion ? undefined : { y: -6, scale: 0.995 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    >
-                      <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-accent/5 opacity-0 blur-3xl transition-opacity duration-500 group-hover/pathway:opacity-100" />
-                      <div className={`relative mx-auto flex h-[220px] w-full max-w-[220px] items-end justify-center overflow-hidden ${item.color} shadow-inner transition-transform duration-700 ease-out group-hover/pathway:scale-[1.03]`}>
-                        <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
-                        <div className="pointer-events-none absolute inset-0 shadow-[inset_0_4px_12px_rgba(255,255,255,0.35),inset_0_-8px_20px_rgba(0,0,0,0.12)]" />
-                      </div>
-                      <div className="relative z-10 mt-8 text-center">
-                        <h3 className="text-[22px] font-semibold tracking-[-0.02em] text-headline">{item.title}</h3>
-                        <p className="mt-3 text-[13px] font-bold uppercase tracking-[0.2em] text-muted">{item.grade}</p>
-                      </div>
-                    </motion.article>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="px-6 py-12 lg:px-10 lg:py-16">
-            <div className="mx-auto grid max-w-[1120px] gap-6 lg:h-[560px] lg:grid-cols-[1.45fr_1fr]">
-              <motion.article
-                className="group relative flex flex-col justify-between overflow-hidden rounded-[40px] bg-[#ffd447] shadow-[0_24px_48px_rgba(255,212,71,0.25)] ring-1 ring-black/5 lg:row-span-2"
-                whileHover={reduceMotion ? undefined : { y: -4, scale: 0.995 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          <motion.div
+            className="flex flex-wrap gap-2.5"
+            initial={prefersReduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            {["Creative Curriculum", "Safe Campus", "Award-Winning"].map((pill) => (
+              <span
+                key={pill}
+                className="text-xs font-medium px-3.5 py-1.5 rounded-full"
+                style={{ background: "rgba(12,19,50,0.05)", border: "1px solid rgba(12,19,50,0.1)",
+                  color: "var(--rb-muted)" }}
               >
-                <div className="absolute inset-0 z-0">
-                  <img
-                    src={interhouseEventUrl}
-                    alt="School students event"
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#ffd447] via-[#ffd447]/98 via-52% to-[#ffd447]/15" />
-                </div>
+                {pill}
+              </span>
+            ))}
+          </motion.div>
+        </div>
 
-                <div className="relative z-10 flex h-full max-w-[420px] flex-col justify-center px-8 py-10 lg:px-12">
-                  <div className="max-w-[360px] rounded-[28px] bg-[#fff8de]/88 p-6 backdrop-blur-sm shadow-[0_14px_30px_rgba(64,39,28,0.08)] ring-1 ring-white/60 lg:p-7">
-                    <div className="mb-auto">
-                      <span className="inline-flex rounded-full bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#8f6800] shadow-sm">
-                        Confidence that lasts
-                      </span>
-                    </div>
-                    <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-[#2f1c11] lg:text-5xl">
-                      Empowering children to think bigger, kinder, and sharper.
-                    </h2>
-                    <p className="mt-5 max-w-[30ch] text-base leading-8 text-[#533726]">
-                      We help each child find their voice through active classrooms, gentle guidance, and meaningful routines.
-                    </p>
-                    <div className="mt-8">
-                      <a
-                        href="#admissions"
-                        className="group/btn relative inline-flex items-center overflow-hidden rounded-full bg-white px-7 py-4 text-sm font-bold text-headline shadow-[0_8px_16px_rgba(64,39,28,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(64,39,28,0.12)]"
-                      >
-                        <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-white">Start your visit</span>
-                        <div className="absolute inset-0 z-0 h-full w-full translate-y-full rounded-full bg-headline transition-transform duration-300 ease-in-out group-hover/btn:translate-y-0" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </motion.article>
+        {/* Right — Image Composition */}
+        <motion.div
+          className="relative hidden lg:block"
+          initial={prefersReduced ? false : { opacity: 0, x: 48 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.95, ease: EASE_EXPO, delay: 0.3 }}
+        >
+          {/* Orbital dashed ring */}
+          <div className="absolute pointer-events-none" style={{
+            inset: -24, borderRadius: 44,
+            border: "2px dashed rgba(201,134,10,0.2)",
+          }} />
+          <div className="absolute pointer-events-none" style={{
+            inset: -48, borderRadius: 60,
+            border: "1px solid rgba(201,134,10,0.08)",
+          }} />
 
-              <div className="grid h-full gap-6 lg:grid-rows-2">
-                {featureCards.map((card) => (
-                  <motion.article
-                    key={card.title}
-                    className={`group/card relative flex flex-col justify-between overflow-hidden rounded-[40px] ${card.tone} px-8 py-8 shadow-[0_12px_24px_rgba(0,0,0,0.04)] ring-1 ring-black/5 transition-shadow hover:shadow-[0_24px_48px_rgba(0,0,0,0.12)]`}
-                    whileHover={reduceMotion ? undefined : { y: -4, scale: 0.995 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/40 opacity-0 blur-3xl transition-opacity duration-500 group-hover/card:opacity-100" />
+          {/* Amber glow behind */}
+          <div className="absolute -inset-8 -z-10 rounded-[52px]" style={{
+            background: "radial-gradient(ellipse, rgba(201,134,10,0.1) 0%, transparent 72%)",
+          }} />
 
-                    <div className="relative z-10">
-                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-headline/50">
-                        {card.eyebrow}
-                      </p>
-                      <h3 className="mt-4 font-display text-3xl font-semibold leading-[1.05] tracking-[-0.04em] text-headline">
-                        {card.title}
-                      </h3>
-                      <p className="mt-4 text-base leading-relaxed text-headline/75">
-                        {card.description}
-                      </p>
-                    </div>
-
-                    <div className="relative z-10 mt-8 md:mt-auto">
-                      <a
-                        href="#contact"
-                        className="inline-flex w-fit items-center gap-2 rounded-full bg-white/50 px-6 py-3.5 text-sm font-bold text-headline backdrop-blur-md transition-all hover:bg-white hover:shadow-lg"
-                      >
-                        {card.cta}
-                        <svg className="h-4 w-4 transition-transform group-hover/card:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                        </svg>
-                      </a>
-                    </div>
-                  </motion.article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section id="admissions" className="px-6 py-12 lg:px-10 lg:py-16">
-            <div className="mx-auto grid max-w-[1120px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-              <Reveal>
-                <span className="inline-flex rounded-full border border-line px-4 py-2 text-sm font-medium text-muted">
-                  Admission journey in progress
-                </span>
-                <h2 className="mt-6 max-w-[11ch] font-display text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-headline sm:text-6xl">
-                  Empower your child to think smarter and live brighter.
-                </h2>
-                <p className="mt-5 max-w-[54ch] text-base leading-8 text-muted">
-                  Schedule a campus walk-through, meet our learning mentors, and see how our creative-first environment
-                  supports academic excellence without losing warmth.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center rounded-full bg-[linear-gradient(135deg,#ff844d,#ffb24f)] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(255,132,77,0.28)] transition hover:-translate-y-0.5"
-                  >
-                    Get Educated
-                  </a>
-                  <a
-                    href="#programs"
-                    className="inline-flex items-center rounded-full border border-line-strong px-6 py-3.5 text-sm font-semibold text-headline transition hover:bg-white"
-                  >
-                    Compare Programs
-                  </a>
-                </div>
-              </Reveal>
-
-              <Reveal delay={0.12}>
-                <div className="relative">
-                  <div className="absolute -left-6 top-12 h-32 w-32 rounded-full bg-[#ffcc57]/50 blur-3xl" />
-                  <div className="absolute right-0 top-0 h-36 w-36 rounded-full bg-[#84cff1]/40 blur-3xl" />
-                  <motion.div
-                    className="group/admimg relative overflow-hidden rounded-[40px] bg-[#4ba4ef] shadow-[0_24px_48px_rgba(35,102,161,0.25)] ring-1 ring-white/20"
-                    whileHover={reduceMotion ? undefined : { y: -6, scale: 0.995 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    <img
-                      src={schoolFlagUrl}
-                      alt="River Belt School students posing with their school flag"
-                      className="h-[560px] w-full object-cover object-top transition-transform duration-700 ease-out group-hover/admimg:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover/admimg:opacity-100" />
-                  </motion.div>
-
-                  <motion.div
-                    className="relative mx-auto -mt-20 grid max-w-[560px] gap-6 rounded-[32px] border border-white/40 bg-white/80 p-6 shadow-[0_24px_48px_rgba(0,0,0,0.12)] backdrop-blur-xl ring-1 ring-black/5 md:grid-cols-2"
-                    whileHover={reduceMotion ? undefined : { y: -4 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    <div className="rounded-[24px] bg-white/50 p-6 shadow-sm ring-1 ring-black/5">
-                      <p className="font-display text-4xl font-semibold tracking-[-0.04em] text-headline">45M+</p>
-                      <p className="mt-3 text-sm leading-relaxed text-muted">Moments of reading, creating, and collaborating shared by our learners.</p>
-                    </div>
-                    <div className="rounded-[24px] bg-white/50 p-6 shadow-sm ring-1 ring-black/5">
-                      <p className="font-display text-4xl font-semibold tracking-[-0.04em] text-headline">164+</p>
-                      <p className="mt-3 text-sm leading-relaxed text-muted">Projects, showcases, and joyful presentations celebrated each year.</p>
-                    </div>
-                  </motion.div>
-                </div>
-              </Reveal>
-            </div>
-          </section>
-
-          <section className="px-6 pb-14 pt-8 lg:px-10 lg:pb-20">
-            <div className="mx-auto grid max-w-[1120px] gap-6 lg:grid-cols-[1fr_1.2fr]">
-              <Reveal>
-                <motion.article
-                  className="group/img relative overflow-hidden rounded-[40px] bg-[#22794e] text-white shadow-[0_24px_48px_rgba(26,95,61,0.25)] ring-1 ring-black/5"
-                  whileHover={reduceMotion ? undefined : { y: -6, scale: 0.995 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <img
-                    src={handmadeChartsUrl}
-                    alt="River Belt School children presenting handmade classroom charts"
-                    className="h-full min-h-[360px] w-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                </motion.article>
-              </Reveal>
-
-              <Reveal delay={0.12}>
-                <motion.article
-                  className="group/event relative flex h-full flex-col justify-between overflow-hidden rounded-[40px] bg-[#ffd43f] px-10 py-10 shadow-[0_24px_48px_rgba(153,113,16,0.25)] ring-1 ring-black/5 transition-shadow hover:shadow-[0_32px_64px_rgba(153,113,16,0.3)]"
-                  whileHover={reduceMotion ? undefined : { y: -6, scale: 0.995 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/30 opacity-0 blur-3xl transition-opacity duration-500 group-hover/event:opacity-100" />
-                  
-                  <div className="relative z-10">
-                    <span className="inline-flex rounded-full bg-white/60 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#997110] backdrop-blur-md">
-                      Upcoming Event
-                    </span>
-                    <h2 className="mt-8 max-w-[12ch] font-display text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-headline lg:text-[42px]">
-                      Building children one caring lesson at a time.
-                    </h2>
-                    <p className="mt-5 max-w-[40ch] text-base leading-relaxed text-headline/80">
-                      Join our open house for live classroom walkthroughs, student showcases, and conversations with our school leaders.
-                    </p>
-                  </div>
-
-                  <div className="relative z-10 mt-10 rounded-[28px] bg-white/50 p-6 backdrop-blur-md ring-1 ring-white/60">
-                    <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-                      <div>
-                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-headline/70">07 April 2026</p>
-                        <p className="mt-2 text-sm font-medium leading-6 text-headline/90">River Belt School, main campus atrium</p>
-                      </div>
-                      <a
-                        href="#contact"
-                        className="group/ebtn relative inline-flex items-center overflow-hidden rounded-full bg-headline px-7 py-4 text-sm font-bold  shadow-lg transition-transform hover:-translate-y-1"
-                      >
-                        <div className=" text-white absolute inset-0 z-0 h-full w-full translate-y-full rounded-full bg-white transition-transform duration-300 ease-in-out group-hover/ebtn:translate-y-0" />
-                        <span className=" text-white relative z-10 transition-colors duration-300 group-hover/ebtn:text-headline">Reserve your spot</span>
-                      </a>
-                    </div>
-                  </div>
-                </motion.article>
-              </Reveal>
-            </div>
-          </section>
-        </main>
-
-        <footer id="contact" className="relative mt-20 overflow-hidden bg-headline px-6 py-16 text-white lg:px-10 lg:py-24">
-          <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-white/5 blur-[120px]" />
-          <div className="relative mx-auto max-w-[1120px]">
-            <div className="flex flex-col gap-12 border-b border-white/10 pb-12 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-[360px]">
-                <a href="#top" className="flex items-center gap-3">
-                  <img src={logoUrl} alt="River Belt School logo" className="h-12 w-12 rounded-full object-cover" />
-                  <span className="font-display text-4xl font-semibold tracking-[-0.05em]">
-                    RiverBelt<span className="text-accent">.</span>
-                  </span>
-                </a>
-                <p className="mt-4 text-sm leading-7 text-white/[72%]">
-                  A warm modern school designed for curious minds, thoughtful habits, and future-facing learning.
-                </p>
-              </div>
-
-              <div className="grid gap-10 sm:grid-cols-3">
-                {footerColumns.map((column) => (
-                  <div key={column.title}>
-                    <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/[55%]">{column.title}</h3>
-                    <ul className="mt-4 space-y-3 text-sm text-white/[78%]">
-                      {column.items.map((item) => (
-                        <li key={item}>
-                          <a href="#top" className="transition hover:text-white">
-                            {item}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4 pt-6 text-sm text-white/[58%] sm:flex-row sm:items-center sm:justify-between">
-              <p>Privacy Policy</p>
-              <p>Designed for River Belt School</p>
-              <p>Copyright 2026 River Belt School. All rights reserved.</p>
-            </div>
+          {/* Main image */}
+          <div className="relative rounded-[36px] overflow-hidden shadow-2xl" style={{ height: 500 }}>
+            <img src={IMG.hero} alt="River Belt students" className="w-full h-full object-cover" />
+            <div className="absolute inset-0" style={{
+              background: "linear-gradient(135deg, rgba(201,134,10,0.1) 0%, transparent 50%)",
+            }} />
+            <div className="absolute top-0 left-6 bottom-0 w-0.5 rounded-full opacity-50" style={{
+              background: "linear-gradient(to bottom, var(--rb-amber), transparent)",
+            }} />
           </div>
-        </footer>
+
+          {/* Floating stat card */}
+          <motion.div
+            className="absolute -left-10 bottom-16 rounded-2xl px-6 py-5 shadow-xl"
+            style={{ background: "#fff", border: "1px solid rgba(12,19,50,0.08)", minWidth: 176,
+              boxShadow: "0 12px 48px rgba(12,19,50,0.1)" }}
+            animate={prefersReduced ? {} : { y: [0, -9, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="rb-display text-[42px] font-semibold leading-none" style={{ color: "var(--rb-amber)" }}>98%</div>
+            <div className="text-xs mt-1.5 leading-snug" style={{ color: "var(--rb-muted)" }}>Parent confidence rate</div>
+          </motion.div>
+
+          {/* Small floating image */}
+          <motion.div
+            className="absolute -right-8 top-8 rounded-2xl overflow-hidden shadow-xl"
+            style={{ width: 152, height: 136, border: "2.5px solid #fff" }}
+            animate={prefersReduced ? {} : { y: [0, 9, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+          >
+            <img src={IMG.heroMini} alt="Campus life" className="w-full h-full object-cover" />
+          </motion.div>
+        </motion.div>
       </div>
+
+      {/* Scroll cue */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        style={{ fontSize: 9, letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--rb-muted)" }}
+        animate={{ opacity: [0.35, 1, 0.35] }}
+        transition={{ duration: 2.4, repeat: Infinity }}
+      >
+        Scroll
+        <div style={{ width: 1, height: 32, background: `linear-gradient(to bottom, var(--rb-amber), transparent)` }} />
+      </motion.div>
+    </section>
+  );
+}
+
+// ─── Stats Ticker ─────────────────────────────────────────────────────────────
+
+function StatsTicker() {
+  return (
+    <div className="overflow-hidden py-[14px]" style={{ background: "var(--rb-navy)" }}>
+      <motion.div
+        className="flex whitespace-nowrap"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 22, ease: "linear", repeat: Infinity }}
+      >
+        {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+          <span
+            key={i}
+            className="inline-flex items-center gap-5 px-8 text-[13px] font-bold tracking-wide"
+            style={{ color: "rgba(255,255,255,0.9)" }}
+          >
+            {item}
+            <span style={{ color: "var(--rb-amber)", opacity: 0.7 }}>✦</span>
+          </span>
+        ))}
+      </motion.div>
     </div>
   );
 }
 
-export default RiverBelt;
+// ─── Programs ─────────────────────────────────────────────────────────────────
+
+function ProgramsSection() {
+  return (
+    <section id="programs" className="py-28 px-6" style={{ background: "var(--rb-surface)" }}>
+      <div className="max-w-290 mx-auto">
+        <Reveal>
+          <span className="text-[11px] tracking-[0.3em] uppercase font-semibold" style={{ color: "var(--rb-amber)" }}>
+            Our Programs
+          </span>
+          <h2
+            className="rb-display font-semibold mt-3 mb-4 leading-[1.08]"
+            style={{ fontSize: "clamp(2.4rem,4.8vw,3.8rem)", color: "var(--rb-text)" }}
+          >
+            Smart and spirited kids,{" "}
+            <em style={{ color: "var(--rb-amber)", fontStyle: "italic" }}>ready to rise high.</em>
+          </h2>
+          <p className="text-lg max-w-lg" style={{ color: "var(--rb-muted)", lineHeight: 1.72 }}>
+            Three signature programs designed to meet children where they are and take them somewhere extraordinary.
+          </p>
+        </Reveal>
+
+        {/* Bento grid */}
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-5" style={{ gridTemplateRows: "auto" }}>
+          <Reveal delay={0.05} className="lg:col-span-2 lg:row-span-2">
+            <ProgramCard prog={PROGRAMS[0]} tall />
+          </Reveal>
+          <Reveal delay={0.15}>
+            <ProgramCard prog={PROGRAMS[1]} />
+          </Reveal>
+          <Reveal delay={0.22}>
+            <ProgramCard prog={PROGRAMS[2]} />
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProgramCard({ prog, tall = false }: { prog: (typeof PROGRAMS)[number]; tall?: boolean }) {
+  return (
+    <motion.div
+      className="relative rounded-[28px] overflow-hidden group cursor-pointer w-full"
+      style={{
+        height: tall ? "clamp(380px,56vw,540px)" : "clamp(220px,26vw,260px)",
+        border: "1px solid rgba(12,19,50,0.07)",
+        boxShadow: "0 2px 24px rgba(12,19,50,0.06)",
+      }}
+      whileHover={{ scale: 1.025, boxShadow: "0 8px 48px rgba(12,19,50,0.12)" }}
+      transition={{ duration: 0.42, ease: EASE_EXPO }}
+    >
+      <img
+        src={prog.img}
+        alt={prog.title}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(to top, rgba(8,12,30,0.92) 0%, rgba(8,12,30,0.42) 50%, transparent 100%)" }}
+      />
+      <div className="absolute inset-0 p-7 flex flex-col justify-end">
+        <span
+          className="self-start text-[11px] font-semibold px-3 py-1 rounded-full mb-3"
+          style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.85)" }}
+        >
+          {prog.tag}
+        </span>
+        <h3
+          className="rb-display font-semibold leading-[1.15] mb-2"
+          style={{ fontSize: tall ? "clamp(1.6rem,2.6vw,2.2rem)" : "1.3rem", color: "#fff" }}
+        >
+          {prog.title}
+        </h3>
+        <p
+          className="text-sm leading-relaxed max-w-sm opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+          style={{ color: "rgba(255,255,255,0.7)" }}
+        >
+          {prog.description}
+        </p>
+        <div className="mt-4 flex items-center gap-2 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ color: "var(--rb-amber)" }}>
+          Learn more <span>→</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Pathways ─────────────────────────────────────────────────────────────────
+
+function PathwaysSection() {
+  return (
+    <section id="about" className="py-28 px-6 relative overflow-hidden" style={{ background: "var(--rb-surface-2)" }}>
+      <GridPattern className="opacity-60" />
+      <LeafAccent className="top-8 right-16 opacity-50" color="rgba(26,144,112,0.12)" />
+
+      <div className="relative z-10 max-w-290 mx-auto">
+        <Reveal>
+          <span className="text-[11px] tracking-[0.3em] uppercase font-semibold" style={{ color: "var(--rb-teal)" }}>
+            Learning Pathways
+          </span>
+          <h2
+            className="rb-display font-semibold mt-3 mb-4 leading-[1.08]"
+            style={{ fontSize: "clamp(2.4rem,4.8vw,3.8rem)", color: "var(--rb-text)" }}
+          >
+            Shaping futures through{" "}
+            <em style={{ color: "var(--rb-teal)", fontStyle: "italic" }}>joyful mastery.</em>
+          </h2>
+          <p className="text-lg max-w-xl" style={{ color: "var(--rb-muted)", lineHeight: 1.72 }}>
+            Four thoughtfully crafted pathways that meet children at their stage and carry them forward with purpose, creativity, and joy.
+          </p>
+        </Reveal>
+
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          {PATHWAYS.map((path, i) => (
+            <Reveal key={path.title} delay={i * 0.09}>
+              <motion.div
+                className="relative rounded-[28px] overflow-hidden group cursor-pointer p-7 flex flex-col"
+                style={{ minHeight: 320, background: path.bg, border: `1.5px solid ${path.border}` }}
+                whileHover={{ scale: 1.03, boxShadow: `0 12px 48px ${path.color}22` }}
+                transition={{ duration: 0.36, ease: EASE_EXPO }}
+              >
+                {/* Background image */}
+                <img
+                  src={path.img || ""}
+                  alt={path.title}
+                  className="absolute inset-0 w-full h-full object-cover opacity-[0.12] group-hover:opacity-[0.22] group-hover:scale-105 transition-all duration-500"
+                />
+
+                <div className="relative z-10 flex flex-col h-full" style={{ minHeight: 266 }}>
+                  <span className="text-3xl" style={{ color: path.color }}>{path.icon}</span>
+
+                  <div className="mt-auto pt-12">
+                    <div className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-2" style={{ color: path.color, opacity: 0.75 }}>
+                      {path.grade}
+                    </div>
+                    <h3 className="rb-display text-[1.4rem] font-semibold mb-3" style={{ color: "var(--rb-text)" }}>
+                      {path.title}
+                    </h3>
+                    <div
+                      className="h-0.5 mb-4 rounded-full transition-all duration-300 group-hover:w-14"
+                      style={{ width: 28, background: path.color, opacity: 0.55 }}
+                    />
+                    <p
+                      className="text-[13px] leading-relaxed opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                      style={{ color: "var(--rb-muted)" }}
+                    >
+                      A dedicated track designed to spark curiosity, build skills, and celebrate growth at every stage.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Philosophy ───────────────────────────────────────────────────────────────
+
+function PhilosophySection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], [32, -32]);
+
+  return (
+    <section ref={sectionRef} className="py-28 px-6 relative overflow-hidden" style={{ background: "var(--rb-surface)" }}>
+      <LeafAccent className="top-12 right-24 opacity-40" color="rgba(26,144,112,0.1)" />
+      <LeafAccent className="bottom-12 left-12 opacity-30 rotate-120" color="rgba(201,134,10,0.1)" />
+
+      <div className="max-w-290 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <Reveal>
+          <span className="text-[11px] tracking-[0.3em] uppercase font-semibold" style={{ color: "var(--rb-teal)" }}>
+            Our Philosophy
+          </span>
+          <div className="rb-display mt-3 italic leading-none" style={{ fontSize: 72, color: "var(--rb-amber)" }}>"</div>
+          <blockquote
+            className="rb-display font-semibold leading-[1.22] mt-2 mb-8 italic"
+            style={{ fontSize: "clamp(1.7rem,3.2vw,2.8rem)", color: "var(--rb-text)" }}
+          >
+            We don't just teach children facts — we teach them to fall in love with asking questions.
+          </blockquote>
+          <div className="flex items-center gap-5">
+            <div className="h-px flex-1" style={{ background: "rgba(12,19,50,0.12)" }} />
+            <div>
+              <div className="text-sm font-semibold" style={{ color: "var(--rb-text)" }}>Dr. R. Menon</div>
+              <div className="text-xs" style={{ color: "var(--rb-muted)" }}>Principal, River Belt School</div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-6 mt-12 pt-10 border-t" style={{ borderColor: "rgba(12,19,50,0.08)" }}>
+            {[
+              { value: "45M+", label: "Learning moments" },
+              { value: "164+", label: "Projects completed" },
+              { value: "15+",  label: "Years of excellence" },
+            ].map((s) => (
+              <div key={s.value}>
+                <div className="rb-display text-[2rem] font-semibold" style={{ color: "var(--rb-amber)" }}>{s.value}</div>
+                <div className="text-xs mt-1" style={{ color: "var(--rb-muted)" }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.18}>
+          <motion.div
+            className="relative rounded-4xl overflow-hidden shadow-2xl"
+            style={{ height: 540 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.5, ease: EASE_EXPO }}
+          >
+            <motion.img
+              src={IMG.philos}
+              alt="River Belt philosophy"
+              className="w-full h-full object-cover"
+              style={prefersReduced ? {} : { y: imgY }}
+            />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(8,12,30,0.5))" }} />
+            <div
+              className="absolute top-0 left-7 bottom-0 w-0.5 rounded-full opacity-50"
+              style={{ background: "linear-gradient(to bottom, var(--rb-amber), transparent)" }}
+            />
+            <div className="absolute bottom-6 left-7 right-7 flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full" style={{ background: "var(--rb-teal)" }} />
+              <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.7)" }}>
+                Inspired by curiosity since 1989
+              </span>
+            </div>
+          </motion.div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ─── Campus Life ──────────────────────────────────────────────────────────────
+
+const CAMPUS_CARDS = [
+  { src: IMG.cam1, label: "Outdoor Zones", sub: "Learning without walls",  color: "var(--rb-amber)", rowSpan: true,  height: 500 },
+  { src: IMG.cam2, label: "Art Studio",    sub: "Creative expression",     color: "var(--rb-teal)",  rowSpan: false, height: 238 },
+  { src: IMG.cam3, label: "Science Lab",   sub: "Curious minds at work",   color: "var(--rb-amber)", rowSpan: false, height: 238 },
+  { src: IMG.cam4, label: "Sports",        sub: "Body & mind",             color: "var(--rb-amber)", rowSpan: false, height: 238 },
+  { src: IMG.cam5, label: "Events",        sub: "Memories made here",      color: "var(--rb-teal)",  rowSpan: false, height: 238 },
+];
+
+function CampusLifeSection() {
+  return (
+    <section id="campus" className="py-28 px-6" style={{ background: "var(--rb-surface-2)" }}>
+      <div className="max-w-290 mx-auto">
+        <Reveal className="text-center mb-16">
+          <span className="text-[11px] tracking-[0.3em] uppercase font-semibold" style={{ color: "var(--rb-amber)" }}>
+            Campus Life
+          </span>
+          <h2
+            className="rb-display font-semibold mt-3 leading-[1.08]"
+            style={{ fontSize: "clamp(2.4rem,4.8vw,3.8rem)", color: "var(--rb-text)" }}
+          >
+            A campus where every{" "}
+            <em style={{ color: "var(--rb-amber)", fontStyle: "italic" }}>corner sparks joy.</em>
+          </h2>
+        </Reveal>
+
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          {CAMPUS_CARDS.map((card, i) => (
+            <Reveal key={card.label} delay={i * 0.07} className={card.rowSpan ? "row-span-2" : ""}>
+              <motion.div
+                className="relative rounded-[28px] overflow-hidden group cursor-pointer w-full"
+                style={{ height: card.height, boxShadow: "0 2px 16px rgba(12,19,50,0.07)" }}
+                whileHover={{ scale: 1.025, boxShadow: "0 8px 40px rgba(12,19,50,0.12)" }}
+                transition={{ duration: 0.38, ease: EASE_EXPO }}
+              >
+                <img
+                  src={card.src}
+                  alt={card.label}
+                  className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-107"
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,12,30,0.78) 0%, transparent 55%)" }} />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="text-[11px] font-semibold tracking-widest uppercase mb-1" style={{ color: card.color }}>{card.label}</div>
+                  <div className="rb-display text-[1.05rem] font-semibold text-white">{card.sub}</div>
+                </div>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+function TestimonialsSection() {
+  const [active, setActive] = useState(0);
+
+  return (
+    <section className="py-28 px-6" style={{ background: "var(--rb-surface)" }}>
+      <div className="max-w-290 mx-auto">
+        <Reveal className="text-center mb-16">
+          <span className="text-[11px] tracking-[0.3em] uppercase font-semibold" style={{ color: "var(--rb-amber)" }}>
+            Parent Voices
+          </span>
+          <h2
+            className="rb-display font-semibold mt-3 leading-[1.08]"
+            style={{ fontSize: "clamp(2.4rem,4.8vw,3.8rem)", color: "var(--rb-text)" }}
+          >
+            Families who{" "}
+            <em style={{ color: "var(--rb-amber)", fontStyle: "italic" }}>trust River Belt.</em>
+          </h2>
+        </Reveal>
+
+        <div className="max-w-3xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.45, ease: EASE_EXPO }}
+              className="relative rounded-4xl overflow-hidden px-10 py-12 md:px-16 md:py-14"
+              style={{ background: "var(--rb-surface-2)", border: "1.5px solid rgba(12,19,50,0.08)",
+                boxShadow: "0 4px 40px rgba(12,19,50,0.06)" }}
+            >
+              {/* Top colour bar */}
+              <div className="absolute top-0 left-0 right-0 h-1 rounded-t-4xl" style={{ background: TESTIMONIALS[active].color }} />
+
+              <div className="rb-display mb-5 italic" style={{ fontSize: 56, color: "var(--rb-amber)", lineHeight: 0.75 }}>"</div>
+              <p className="text-xl leading-[1.8] mb-10" style={{ color: "var(--rb-text)" }}>
+                {TESTIMONIALS[active].quote}
+              </p>
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
+                  style={{ background: `${TESTIMONIALS[active].color}18`, color: TESTIMONIALS[active].color,
+                    border: `2px solid ${TESTIMONIALS[active].color}40` }}
+                >
+                  {TESTIMONIALS[active].initials}
+                </div>
+                <div>
+                  <div className="font-semibold text-sm" style={{ color: "var(--rb-text)" }}>{TESTIMONIALS[active].name}</div>
+                  <div className="text-xs" style={{ color: "var(--rb-muted)" }}>{TESTIMONIALS[active].role}</div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="flex justify-center gap-2 mt-8">
+            {TESTIMONIALS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                aria-label={`Testimonial ${i + 1}`}
+                className="rounded-full transition-all duration-300"
+                style={{ width: i === active ? 28 : 8, height: 8,
+                  background: i === active ? "var(--rb-navy)" : "rgba(12,19,50,0.15)" }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Admissions CTA ───────────────────────────────────────────────────────────
+
+function AdmissionsSection() {
+  return (
+    <section id="admissions" className="py-28 px-6 relative overflow-hidden" style={{ background: "var(--rb-navy)" }}>
+      <DotPattern dark />
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "radial-gradient(ellipse at 50% 110%, rgba(232,160,24,0.12) 0%, transparent 62%)",
+      }} />
+
+      <div className="relative z-10 max-w-290 mx-auto">
+        <Reveal>
+          <div className="text-center">
+            <div className="w-16 h-1 rounded-full mx-auto mb-8" style={{
+              background: "linear-gradient(90deg, var(--rb-amber), var(--rb-teal))",
+            }} />
+            <span className="text-[11px] tracking-[0.3em] uppercase font-semibold" style={{ color: "var(--rb-amber)" }}>
+              Admissions 2026
+            </span>
+            <h2
+              className="rb-display font-semibold mt-4 mb-6 leading-[1.05]"
+              style={{ fontSize: "clamp(2.5rem,5.2vw,4.4rem)", color: "#fff" }}
+            >
+              Begin your child's{" "}
+              <em style={{ color: "var(--rb-amber)", fontStyle: "italic" }}>extraordinary journey.</em>
+            </h2>
+            <p className="text-lg max-w-xl mx-auto mb-12" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.72 }}>
+              Limited seats available for the 2026–27 academic year. Book a campus visit and discover
+              firsthand why River Belt is where bright futures begin.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a
+                href="#"
+                className="px-10 py-4 rounded-full font-semibold text-sm transition-all duration-200"
+                style={{ background: "var(--rb-amber)", color: "#0f1e42" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#f5c44e"; e.currentTarget.style.transform = "translateY(-2px) scale(1.02)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "var(--rb-amber)"; e.currentTarget.style.transform = ""; }}
+              >
+                Apply Now
+              </a>
+              <a
+                href="#"
+                className="px-10 py-4 rounded-full font-medium text-sm transition-all duration-200"
+                style={{ background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.16)", color: "#fff" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.14)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.transform = ""; }}
+              >
+                Compare Programs
+              </a>
+            </div>
+
+            <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto mt-14 pt-12 border-t" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+              {[
+                { val: "98%", label: "Parent satisfaction" },
+                { val: "24+", label: "Learning zones" },
+                { val: "12:1", label: "Mentor ratio" },
+              ].map((s) => (
+                <div key={s.val}>
+                  <div className="rb-display font-semibold" style={{ fontSize: "2.2rem", color: "var(--rb-amber)" }}>{s.val}</div>
+                  <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+function Footer() {
+  return (
+    <footer id="contact" className="pt-20 pb-10 px-6 relative overflow-hidden" style={{ background: "#f0f2f8" }}>
+      <div className="max-w-290 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-14 border-b" style={{ borderColor: "rgba(12,19,50,0.1)" }}>
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+              <img src={LOGO} alt="River Belt" className="h-10 w-10 rounded-full object-cover" />
+              <div>
+                <div className="rb-display text-lg font-semibold" style={{ color: "var(--rb-text)" }}>River Belt School</div>
+                <div className="text-[10px] tracking-widest uppercase" style={{ color: "var(--rb-muted)" }}>Nurturing Excellence</div>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--rb-muted)" }}>
+              Nurturing bright, curious minds through inspired teaching, creative exploration, and a safe, joyful campus since 1989.
+            </p>
+            <div className="flex gap-2.5 mt-8">
+              {["F", "Ig", "Yt"].map((s) => (
+                <a
+                  key={s}
+                  href="#"
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-[11px] font-bold transition-all duration-200"
+                  style={{ background: "rgba(12,19,50,0.06)", border: "1px solid rgba(12,19,50,0.1)", color: "var(--rb-muted)" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "var(--rb-navy)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "var(--rb-navy)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(12,19,50,0.06)"; e.currentTarget.style.color = "var(--rb-muted)"; e.currentTarget.style.borderColor = "rgba(12,19,50,0.1)"; }}
+                >
+                  {s}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {Object.entries(FOOTER_LINKS).map(([section, links]) => (
+            <div key={section}>
+              <h4 className="text-[10px] tracking-[0.22em] uppercase font-semibold mb-5" style={{ color: "var(--rb-navy)" }}>
+                {section}
+              </h4>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link}>
+                    <a
+                      href="#"
+                      className="text-[13px] transition-colors duration-200"
+                      style={{ color: "var(--rb-muted)" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--rb-text)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--rb-muted)")}
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs" style={{ color: "var(--rb-muted)" }}>
+          <span>© 2026 River Belt School. All rights reserved.</span>
+          <div className="flex gap-6">
+            {["Privacy Policy", "Terms of Use", "Accessibility"].map((l) => (
+              <a key={l} href="#" className="transition-colors duration-200"
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--rb-text)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--rb-muted)")}>
+                {l}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ─── Root ─────────────────────────────────────────────────────────────────────
+
+export default function RiverBelt() {
+  const [pageReady, setPageReady] = useState(false);
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.href =
+      "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+    return () => { if (document.head.contains(link)) document.head.removeChild(link); };
+  }, []);
+
+  return (
+    <>
+      <style>{`
+        .rb-root {
+          --rb-bg: #f7f8fc;
+          --rb-surface: #ffffff;
+          --rb-surface-2: #f0f3f9;
+          --rb-navy: #0f1e42;
+          --rb-navy-hover: #1a2e5a;
+          --rb-border: rgba(12, 19, 50, 0.08);
+          --rb-border-strong: rgba(12, 19, 50, 0.14);
+          --rb-text: #0c1322;
+          --rb-muted: #5c6880;
+          --rb-amber: #c9860a;
+          --rb-amber-dim: rgba(201, 134, 10, 0.1);
+          --rb-teal: #1a7a5e;
+          --rb-teal-dim: rgba(26, 122, 94, 0.1);
+          --rb-font-sans: "Plus Jakarta Sans", "Manrope", system-ui, sans-serif;
+          font-family: var(--rb-font-sans);
+          -webkit-font-smoothing: antialiased;
+          background: var(--rb-bg);
+          color: var(--rb-text);
+        }
+        .rb-root .rb-display {
+          font-family: "DM Serif Display", "Fraunces", Georgia, serif;
+        }
+        .rb-root *::selection {
+          background: rgba(201, 134, 10, 0.18);
+          color: #0c1322;
+        }
+      `}</style>
+
+      <AnimatePresence>
+        {!pageReady && (
+          <div className="rb-root">
+            <PageLoader onDone={() => setPageReady(true)} />
+          </div>
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        className="rb-root"
+        animate={{ opacity: pageReady ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Navbar />
+        <main>
+          <HeroSection />
+          <StatsTicker />
+          <ProgramsSection />
+          <PathwaysSection />
+          <PhilosophySection />
+          <CampusLifeSection />
+          <TestimonialsSection />
+          <AdmissionsSection />
+        </main>
+        <Footer />
+      </motion.div>
+    </>
+  );
+}
