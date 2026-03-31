@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { NAV_LINKS, PS_LOGO, PS_COLORS } from "./constants";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -26,7 +28,7 @@ export function Navbar() {
         transition={{ duration: 0.3 }}
       >
         <div className="grid grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[auto_1fr_auto]">
-          <a href="#top" className="flex items-center gap-3">
+          <a href="/pilgrim" className="flex items-center gap-3">
             <img src={PS_LOGO} alt="Pilgrim" className="h-10 w-10 rounded-full object-cover" />
             <div className="min-w-0">
               <div
@@ -47,10 +49,15 @@ export function Navbar() {
           <div className="hidden items-center justify-center gap-7 lg:flex">
             {NAV_LINKS.map((link) => (
               <a
-                key={link.id}
-                href={`#${link.id}`}
+                key={link.href}
+                href={link.href}
                 className="ps-link-underline text-sm"
-                style={{ color: PS_COLORS.navy }}
+                style={{
+                  color:
+                    location.pathname.startsWith("/pilgrim/events") && link.href === "/pilgrim/events"
+                      ? PS_COLORS.oxblood
+                      : PS_COLORS.navy,
+                }}
               >
                 {link.label}
               </a>
@@ -59,7 +66,7 @@ export function Navbar() {
 
           <div className="flex items-center justify-end gap-3">
             <a
-              href="#admissions"
+              href="/pilgrim#admissions"
               className="hidden lg:inline-flex rounded-full border px-5 py-2 text-sm font-medium transition-colors"
               style={{
                 borderColor: "rgba(15,28,46,0.12)",
@@ -97,8 +104,8 @@ export function Navbar() {
           >
             {NAV_LINKS.map((link) => (
               <a
-                key={link.id}
-                href={`#${link.id}`}
+                key={link.href}
+                href={link.href}
                 className="block py-3 text-base font-medium"
                 style={{ color: PS_COLORS.navy }}
                 onClick={() => setMobileOpen(false)}
@@ -107,7 +114,7 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href="#admissions"
+              href="/pilgrim#admissions"
               className="mt-3 inline-flex ps-button-primary"
               onClick={() => setMobileOpen(false)}
             >

@@ -21,4 +21,5 @@ export { TestimonialsSection } from "./TestimonialsSection";
 export { AdmissionsSection } from "./AdmissionsSection";
 export { NewsletterSection } from "./NewsletterSection";
 export { Footer } from "./Footer";
+export { PilgrimThemeStyles } from "./PilgrimThemeStyles";
 export * from "./constants";

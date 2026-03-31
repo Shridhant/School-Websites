@@ -20,29 +20,30 @@ export const PS_COLORS = {
 export const PS_LOGO = pilgrimLogo;
 
 export const SCHOOL_IMAGES = {
-  hero: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80",
-  heroMini: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=80",
-  prog1: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80",
-  prog2: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80",
-  prog3: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&q=80",
-  prog4: "https://images.unsplash.com/photo-1450133064473-71024230f91b?w=800&q=80",
-  prog5: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=800&q=80",
-  campus1: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=800&q=80",
-  campus2: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80",
-  campus3: "https://images.unsplash.com/photo-1519452575417-564c1401ecc0?w=800&q=80",
-  campus4: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
-  campus5: "https://images.unsplash.com/photo-1464582883107-8adf2dca8a9f?w=800&q=80",
-  philosophy: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80",
+  hero: "/pggradceremony/587307220_17925687606187628_7403752521015145037_n.jpg",
+  heroMini: "/pgculturalday/655023862_18111547924612481_9136221587399721767_n.jpg",
+  prog1: "/pgchildrensday/653657753_18109081147840958_8389047524236699607_n.jpg",
+  prog2: "/pgchildrensday/655579980_18103162994502174_3521705137682928064_n.jpg",
+  prog3: "/pgchildrensday/656029940_18093585214869384_5646380790682162218_n.jpg",
+  prog4: "/pgfarewell/491430461_17900600646187628_5453489313585537986_n.jpg",
+  prog5: "/pgfarewell/495706951_17900600679187628_2150246812667494050_n.jpg",
+  campus1: "/pggradceremony/588223433_17925687642187628_501592366680903606_n.jpg",
+  campus2: "/pgculturalday/656210453_18072313403231186_8628573922637313913_n.jpg",
+  campus3: "/pgfarewell/496104120_17900600790187628_1745460346768704882_n.jpg",
+  campus4: "/pggradceremony/589739268_17925687597187628_4606330193982032556_n.jpg",
+  campus5: "/pgchildrensday/655579980_18103162994502174_3521705137682928064_n.jpg",
+  philosophy: "/pggradceremony/587307220_17925687606187628_7403752521015145037_n.jpg",
 } as const;
 
 export const EASE_EXPO = [0.16, 1, 0.3, 1] as const;
 
 export const NAV_LINKS = [
-  { label: "Academics", id: "academics" },
-  { label: "Results", id: "results" },
-  { label: "Campus", id: "campus" },
-  { label: "Philosophy", id: "mission" },
-  { label: "Admissions", id: "admissions" },
+  { label: "Academics", href: "/pilgrim#academics" },
+  { label: "Results", href: "/pilgrim#results" },
+  { label: "Campus", href: "/pilgrim#campus" },
+  { label: "Philosophy", href: "/pilgrim#mission" },
+  { label: "Events", href: "/pilgrim/events" },
+  { label: "Admissions", href: "/pilgrim#admissions" },
 ] as const;
 
 export const INSTITUTIONAL_RIBBON = [
@@ -194,4 +195,66 @@ export const ADMISSIONS_STEPS = [
   "Meet the Principal or admission committee with the child and parents where required.",
   "Submit the relevant documents such as birth certificate, TC or PCR, and class records.",
   "For Class 11 Arts, apply with HSLC records and NBSE-recognised eligibility documents.",
+] as const;
+
+export const PILGRIM_EVENTS = [
+  {
+    slug: "childrens-day-celebration",
+    title: "Children's Day Celebration",
+    date: "November 14, 2026",
+    time: "10:00 AM to 1:30 PM",
+    location: "Pilgrim School Courtyard",
+    description:
+      "A lively school-day celebration centred on student joy, playful performances, and shared campus moments across junior and senior groups.",
+    cover: "/pgchildrensday/653657753_18109081147840958_8389047524236699607_n.jpg",
+    gallery: [
+      "/pgchildrensday/653657753_18109081147840958_8389047524236699607_n.jpg",
+      "/pgchildrensday/655579980_18103162994502174_3521705137682928064_n.jpg",
+      "/pgchildrensday/656029940_18093585214869384_5646380790682162218_n.jpg",
+    ],
+  },
+  {
+    slug: "cultural-day-showcase",
+    title: "Cultural Day Showcase",
+    date: "August 22, 2026",
+    time: "11:00 AM to 3:00 PM",
+    location: "Pilgrim Assembly Hall",
+    description:
+      "A curated cultural program featuring stage presentations, traditional expression, and student confidence in front of the wider school community.",
+    cover: "/pgculturalday/655023862_18111547924612481_9136221587399721767_n.jpg",
+    gallery: [
+      "/pgculturalday/655023862_18111547924612481_9136221587399721767_n.jpg",
+      "/pgculturalday/656210453_18072313403231186_8628573922637313913_n.jpg",
+    ],
+  },
+  {
+    slug: "farewell-gathering",
+    title: "Farewell Gathering",
+    date: "February 18, 2027",
+    time: "2:00 PM to 5:00 PM",
+    location: "Pilgrim Senior Block Hall",
+    description:
+      "A graceful farewell occasion marking transition, reflection, and gratitude for senior students moving into their next chapter.",
+    cover: "/pgfarewell/491430461_17900600646187628_5453489313585537986_n.jpg",
+    gallery: [
+      "/pgfarewell/491430461_17900600646187628_5453489313585537986_n.jpg",
+      "/pgfarewell/495706951_17900600679187628_2150246812667494050_n.jpg",
+      "/pgfarewell/496104120_17900600790187628_1745460346768704882_n.jpg",
+    ],
+  },
+  {
+    slug: "graduation-ceremony",
+    title: "Graduation Ceremony",
+    date: "March 28, 2027",
+    time: "9:30 AM to 12:30 PM",
+    location: "Pilgrim Main Auditorium",
+    description:
+      "A formal graduation gathering celebrating student milestones, achievement, and the school values that shaped the graduating class.",
+    cover: "/pggradceremony/587307220_17925687606187628_7403752521015145037_n.jpg",
+    gallery: [
+      "/pggradceremony/587307220_17925687606187628_7403752521015145037_n.jpg",
+      "/pggradceremony/588223433_17925687642187628_501592366680903606_n.jpg",
+      "/pggradceremony/589739268_17925687597187628_4606330193982032556_n.jpg",
+    ],
+  },
 ] as const;

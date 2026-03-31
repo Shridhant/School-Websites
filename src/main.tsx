@@ -14,6 +14,8 @@ import RinchoEvents from "./TestPages/RinchoEvents";
 import RinchoEventDetails from "./TestPages/RinchoEventDetails";
 import RiverBelt from "./TestPages/RiverBelt";
 import Pilgrim from "./TestPages/Pilgrim";
+import PilgrimEvents from "./TestPages/PilgrimEvents";
+import PilgrimEventGallery from "./TestPages/PilgrimEventGallery";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
   {
     path: "/pilgrim",
     element: <Pilgrim />,
+  },
+  {
+    path: "/pilgrim/events",
+    element: <PilgrimEvents />,
+  },
+  {
+    path: "/pilgrim/events/:slug",
+    element: <PilgrimEventGallery />,
   },
 ]);
 
