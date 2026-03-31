@@ -10,8 +10,8 @@ export function PathwaysSection() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionIntro
           eyebrow="Formation Pathways"
-          title="Four parallel tracks shape the Pilgrim student profile."
-          body="This section now reads like a sequence of institutional chapters rather than another repeated card row."
+          title="Four published academic stages shape the Pilgrim journey."
+          body="The cards now reflect the school’s actual curriculum path instead of a generic excellence framework."
           align="center"
         />
 

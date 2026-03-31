@@ -12,11 +12,11 @@ export function AcademicsSection() {
     SCHOOL_IMAGES.prog5,
   ];
   const streamMeta = [
-    { tag: "Engineering track", serial: "01", note: "Featured stream" },
-    { tag: "Medical track", serial: "02", note: "Laboratory focus" },
-    { tag: "Business track", serial: "03", note: "Applied commerce" },
-    { tag: "Humanities track", serial: "04", note: "Civic and literary" },
-    { tag: "Leadership track", serial: "05", note: "Discipline and service" },
+    { tag: "Early years", serial: "01", note: "Featured programme" },
+    { tag: "Middle years", serial: "02", note: "NCERT track" },
+    { tag: "Secondary", serial: "03", note: "NBSE high school" },
+    { tag: "Senior years", serial: "04", note: "Arts higher secondary" },
+    { tag: "School life", serial: "05", note: "Activities and vocation" },
   ];
 
   return (
@@ -38,11 +38,11 @@ export function AcademicsSection() {
                   className="mt-5 font-display text-[clamp(2.2rem,3.9vw,3.8rem)] leading-[0.98]"
                   style={{ color: PS_COLORS.ink }}
                 >
-                  Distinct streams, presented with clearer academic hierarchy.
+                  The actual Pilgrim offering, arranged with clearer academic hierarchy.
                 </h2>
                 <p className="mt-5 max-w-xl text-[15px] leading-7" style={{ color: PS_COLORS.moss }}>
-                  Each program now reads more like a considered prospectus entry and less like a
-                  repeated marketing card.
+                  This section now reflects the school’s published structure: Montessori, NCERT middle
+                  years, NBSE secondary classes, Arts higher secondary, and co-curricular activity.
                 </p>
               </div>
             </Reveal>
@@ -50,9 +50,9 @@ export function AcademicsSection() {
             <Reveal delay={0.1}>
               <div className="mt-10 rounded-[28px] border bg-white/55 p-6" style={{ borderColor: PS_COLORS.border }}>
                 {[
-                  "Board-ready teaching with explicit academic benchmarks.",
-                  "Competitive preparation integrated into the weekly rhythm.",
-                  "Programs designed to feel distinct rather than duplicated cards.",
+                  "Montessori-based early learning for Nursery to UKG.",
+                  "NCERT for Classes 1 to 8 and NBSE for Classes 9 to 12.",
+                  "Arts higher secondary and co-curricular life presented as official school offerings.",
                 ].map((point, index) => (
                   <div
                     key={point}
@@ -76,11 +76,11 @@ export function AcademicsSection() {
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {PROGRAMS.map((prog, i) => (
-              <TiltCard key={prog.name} className={i === 0 ? "sm:col-span-2" : ""}>
-                <Reveal delay={i * 0.07}>
+              <TiltCard key={prog.name} className={i === 0 ? "h-full sm:col-span-2" : "h-full"}>
+                <Reveal delay={i * 0.07} className="h-full">
                   <SpotlightCard
-                    className={`group rounded-[30px] border ${
-                      i === 0 ? "min-h-[420px]" : "min-h-[300px]"
+                    className={`group h-full rounded-[30px] border ${
+                      i === 0 ? "h-[340px] sm:h-[360px]" : "h-[300px]"
                     }`}
                     spotlightColor={i % 2 === 0 ? "rgba(201,164,92,0.16)" : "rgba(122,46,46,0.12)"}
                   >

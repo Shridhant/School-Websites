@@ -25,14 +25,14 @@ export function AdmissionsSection() {
               </p>
               <div className="mt-5 max-w-xl">
                 <WordPullUp
-                  text="Ready to enter a school with visible standards and stronger presence?"
+                  text="Admissions shaped by school forms, eligibility rules, and direct interaction."
                   className="justify-start"
                   wordClassName="font-display text-[clamp(2.2rem,4vw,3.8rem)] leading-[0.98] text-[var(--ps-cream)]"
                 />
               </div>
               <p className="mt-6 max-w-xl text-sm leading-7" style={{ color: "rgba(246,241,231,0.76)" }}>
-                Applications for 2026-27 are framed here with more ceremony: a formal panel, clear
-                process notes, and stronger calls to action.
+                The official site distinguishes Montessori and high school admissions from higher
+                secondary Arts admission, with document requirements and school-level screening.
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -59,7 +59,7 @@ export function AdmissionsSection() {
                     Admission Process
                   </p>
                   <h3 className="mt-3 font-display text-[2rem]" style={{ color: PS_COLORS.navy }}>
-                    Three clear steps
+                    Three official checkpoints
                   </h3>
                 </div>
                 <div

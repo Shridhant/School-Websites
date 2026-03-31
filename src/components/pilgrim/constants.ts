@@ -47,150 +47,151 @@ export const NAV_LINKS = [
 
 export const INSTITUTIONAL_RIBBON = [
   "Admissions Open 2026-27",
-  "CBSE Curriculum",
-  "45+ IIT/NEET Selections",
-  "Board Discipline",
-  "Leadership and Character",
-  "Library and Laboratory Culture",
+  "Affiliated to NBSE",
+  "Christian Private Day-cum-Residential School",
+  "Montessori to Higher Secondary",
+  "Classes 11 & 12 (Arts)",
+  "NCC Air Wing • Scouts & Guides",
+  "Kuda B Village, Dimapur",
 ] as const;
 
 export const HERO_FACTS = [
-  { value: "98%", label: "board pass rate" },
-  { value: "35+", label: "qualified faculty" },
-  { value: "15:1", label: "student-teacher ratio" },
+  { value: "1987", label: "humble beginning" },
+  { value: "NBSE", label: "board affiliation" },
+  { value: "Hostel", label: "residential service" },
 ];
 
 export const PROGRAMS = [
   {
-    name: "Science (PCM)",
+    name: "Montessori House",
     description:
-      "Physics, Chemistry, Mathematics with advanced practical labs and competitive exam rigor for engineering ambitions.",
+      "Nursery to UKG with a customized Montessori-based curriculum complemented with Montessori apparatus.",
   },
   {
-    name: "Science (PCB)",
+    name: "Classes 1 to 8",
     description:
-      "Physics, Chemistry, Biology supported by disciplined wet-lab practice and deep medical entrance preparation.",
+      "NCERT curriculum paired with colorful, skill-based programs for the foundational and middle years.",
   },
   {
-    name: "Commerce",
+    name: "Classes 9 & 10",
     description:
-      "Accounting, Economics, and Business Studies shaped for CA, CS, management study, and applied commercial literacy.",
+      "NBSE high school years supported by term assessments, discipline, and focused school preparation.",
   },
   {
-    name: "Arts",
+    name: "Class 11 & 12 (Arts)",
     description:
-      "History, Geography, Political Science, and Literature for civil service, journalism, humanities, and legal pathways.",
+      "NBSE higher secondary Arts stream with admission based on HSLC performance and school criteria.",
   },
   {
-    name: "NCC Air Wing",
+    name: "Vocational & Co-curricular",
     description:
-      "Certified military training that builds leadership, bearing, discipline, and public-minded confidence.",
+      "NCC Air Wing, Taekwondo, Dance, Fine Arts, Vocal, Eco Club, excursions, games, sports, and workshops.",
   },
 ] as const;
 
 export const PATHWAYS = [
   {
-    name: "CBSE Curriculum",
+    name: "Montessori Foundation",
     icon: "I",
-    detail: "Structured classroom rigor, term planning, board-focused discipline.",
-    note: "Academic core",
+    detail: "Customized Montessori curriculum with apparatus for Nursery to UKG.",
+    note: "Early years",
   },
   {
-    name: "Competitive Prep",
+    name: "NCERT Middle Years",
     icon: "II",
-    detail: "Focused coaching for JEE, NEET, and high-performance exam habits.",
-    note: "Advanced track",
+    detail: "Classes 1 to 8 with NCERT structure and skill-based learning.",
+    note: "Primary to middle",
   },
   {
-    name: "Skill Development",
+    name: "NBSE High School",
     icon: "III",
-    detail: "Communication, digital fluency, research habits, and project ownership.",
-    note: "Applied learning",
+    detail: "Classes 9 and 10 under the Nagaland Board of School Education.",
+    note: "Secondary",
   },
   {
-    name: "Holistic Formation",
+    name: "Arts Higher Secondary",
     icon: "IV",
-    detail: "Sports, arts, leadership, and value formation woven into school life.",
-    note: "Character and culture",
+    detail: "Class 11 and 12 Arts stream with NBSE-recognised higher secondary criteria.",
+    note: "Senior years",
   },
 ] as const;
 
 export const CAMPUS_AREAS = [
   {
-    name: "Science Labs",
-    caption: "Practical science spaces designed for repetition, rigor, and confidence.",
+    name: "Hostel Accommodation",
+    caption: "Residential provision that supports the school’s day-cum-residential identity.",
     rowSpan: true,
   },
   {
-    name: "Computer Lab",
-    caption: "Digital classrooms with focused instruction and supervised practice.",
+    name: "Bus Facility",
+    caption: "Transport support highlighted as one of the school’s practical services.",
     rowSpan: false,
   },
   {
-    name: "Library",
-    caption: "A quiet reading culture supported by reference, literature, and habit-building.",
+    name: "NCC Air Wing",
+    caption: "Leadership, discipline, and structured co-curricular training through NCC.",
     rowSpan: false,
   },
   {
-    name: "Sports Complex",
-    caption: "Athletic training as discipline, endurance, teamwork, and school pride.",
+    name: "Scouts & Guides",
+    caption: "Character-building and group responsibility through service-oriented activity.",
     rowSpan: false,
   },
   {
-    name: "Auditorium",
-    caption: "Assemblies, cultural programs, and public speaking under one institutional roof.",
+    name: "Grooming & Personality Development",
+    caption: "A published vocational and development offering focused on student confidence and bearing.",
     rowSpan: false,
   },
 ] as const;
 
 export const MISSION_VALUES = [
   {
-    title: "Academic seriousness",
-    description: "Expectations are explicit, standards are visible, and preparation is habitual.",
+    title: "Body, mind, and spirit",
+    description: "The school frames growth as whole-person formation rather than academics alone.",
   },
   {
-    title: "Moral foundation",
-    description: "The school frames excellence as character, service, and disciplined judgment.",
+    title: "Christian foundation",
+    description: "Its motto and school identity place faith, wisdom, and moral grounding at the center.",
   },
   {
-    title: "Institutional belonging",
-    description: "Students grow within a culture of house spirit, routine, ceremony, and pride.",
+    title: "Healthy citizenship",
+    description: "The stated aim is to build children into healthy citizens who can excel in life.",
   },
 ] as const;
 
 export const TESTIMONIALS = [
   {
-    quote: "From struggling with Maths to scoring 95% in Board Exams. The personalized mentoring here is incredible.",
-    author: "Arjun S.",
-    role: "Class XII Topper, Science Stream",
+    quote: "Pilgrim describes its purpose as building children who can grow in body, mind, and spirit.",
+    author: "School Motto",
+    role: "Official school statement",
     color: "#B5860B",
-    initials: "AS",
+    initials: "SM",
   },
   {
-    quote: "Pilgrim's NEET coaching + rigorous labs made me confident. Got into AIIMS Delhi. Thank you.",
-    author: "Shreya D.",
-    role: "Class XII, Medical Aspirant",
+    quote: "The official profile presents Pilgrim as a Christian private educational day-cum-residential school affiliated to NBSE.",
+    author: "About Pilgrim",
+    role: "Official school information",
     color: "#1A3A2A",
-    initials: "SD",
+    initials: "AP",
   },
   {
-    quote: "Not just academics—sports, debates, cultural programs. This school develops the complete person.",
-    author: "Karan M.",
-    role: "Class XI, Commerce + NCC",
+    quote: "Its website highlights Montessori, NCERT middle years, NBSE classes, hostel, bus facility, NCC, and vocational activities.",
+    author: "Courses & Services",
+    role: "Official school information",
     color: "#2D5F7A",
-    initials: "KM",
+    initials: "CS",
   },
 ] as const;
 
 export const ACHIEVEMENTS = [
-  { value: 98, suffix: "%", label: "Board Pass Rate", subtext: "Three-year average across Class X and XII" },
-  { value: 45, suffix: "+", label: "IIT / NEET Selections", subtext: "Across the last five graduating cohorts" },
-  { value: 500, suffix: "+", label: "Students Enrolled", subtext: "A focused secondary-school community" },
-  { value: 35, suffix: "+", label: "Qualified Faculty", subtext: "Experienced teachers across all streams" },
+  { value: 1987, suffix: "", label: "Founded", subtext: "Started by Mr. & Mrs. M Kikon" },
+  { value: 8, suffix: "", label: "Classes 1 to 8", subtext: "NCERT curriculum with skill-based programs" },
+  { value: 2, suffix: "", label: "NBSE Stages", subtext: "High school and higher secondary Arts" },
+  { value: 3, suffix: "", label: "Formation Areas", subtext: "Body, mind, and spirit in the school motto" },
 ] as const;
 
 export const ADMISSIONS_STEPS = [
-  "Counselling conversation with family and student",
-  "Academic review, stream guidance, and campus orientation",
-  "Application submission and admission confirmation",
+  "Meet the Principal or admission committee with the child and parents where required.",
+  "Submit the relevant documents such as birth certificate, TC or PCR, and class records.",
+  "For Class 11 Arts, apply with HSLC records and NBSE-recognised eligibility documents.",
 ] as const;

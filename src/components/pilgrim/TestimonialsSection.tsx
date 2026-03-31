@@ -12,10 +12,10 @@ export function TestimonialsSection() {
         <Reveal>
           <div className="mb-12 max-w-3xl">
             <p className="text-[11px] uppercase tracking-[0.34em]" style={{ color: PS_COLORS.oxblood }}>
-              Community Letters
+              School Notes
             </p>
             <h2 className="mt-5 font-display text-[clamp(2.2rem,4vw,3.8rem)] leading-[0.98]" style={{ color: PS_COLORS.navy }}>
-              Voices from students and families, arranged like archived correspondence.
+              Official Pilgrim details, arranged like archival notes.
             </h2>
           </div>
         </Reveal>
@@ -35,7 +35,7 @@ export function TestimonialsSection() {
                   }}
                 >
                   <p className="text-[11px] uppercase tracking-[0.32em]" style={{ color: PS_COLORS.oxblood }}>
-                    Letter {String(index + 1).padStart(2, "0")}
+                    Note {String(index + 1).padStart(2, "0")}
                   </p>
                   <div className="mt-3 text-lg font-semibold" style={{ color: PS_COLORS.navy }}>
                     {testimonial.author}
@@ -61,7 +61,7 @@ export function TestimonialsSection() {
               >
                 <div className="flex items-center justify-between gap-4">
                   <p className="text-[11px] uppercase tracking-[0.34em]" style={{ color: PS_COLORS.oxblood }}>
-                    Active letter
+                    Official note
                   </p>
                   <div
                     className="rounded-full px-4 py-2 text-[11px] uppercase tracking-[0.28em]"

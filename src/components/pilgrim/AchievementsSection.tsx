@@ -17,14 +17,14 @@ export function AchievementsSection() {
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div>
               <p className="text-[11px] uppercase tracking-[0.34em]" style={{ color: "rgba(246,241,231,0.7)" }}>
-                Results Ledger
+                School Profile
               </p>
               <h2 className="mt-5 font-display text-[clamp(2.3rem,4vw,3.9rem)] leading-[0.98]" style={{ color: PS_COLORS.cream }}>
-                Academic outcomes shown like institutional evidence.
+                Official school details shown as a clearer institutional profile.
               </h2>
               <p className="mt-5 max-w-xl text-sm leading-7" style={{ color: "rgba(246,241,231,0.72)" }}>
-                The section is rebuilt as a dark results register, with count-up statistics and formal
-                cards that feel closer to an annual report than a standard landing page.
+                This section no longer implies exam claims that are not on the official website. It now
+                highlights Pilgrim’s published structure, founding, board affiliation, and school model.
               </p>
             </div>
 
@@ -34,9 +34,9 @@ export function AchievementsSection() {
             >
               <div className="grid gap-5 text-sm sm:grid-cols-3">
                 {[
-                  "Board exam discipline",
-                  "Faculty-led mentoring",
-                  "Competitive exam readiness",
+                  "Christian private educational identity",
+                  "Day-cum-residential school format",
+                  "NBSE structure across the school journey",
                 ].map((note) => (
                   <div
                     key={note}
@@ -82,21 +82,21 @@ export function AchievementsSection() {
           <Reveal delay={0.2}>
             <aside className="ps-ink-panel rounded-[32px] p-8 sm:p-10">
               <p className="text-[11px] uppercase tracking-[0.34em]" style={{ color: "rgba(201,164,92,0.8)" }}>
-                Registrar's Note
+                Profile Note
               </p>
               <h3 className="mt-5 font-display text-[2.2rem] leading-[1.02]" style={{ color: PS_COLORS.cream }}>
-                A results section that reads with institutional authority.
+                A more accurate Pilgrim section, based on the official school site.
               </h3>
               <p className="mt-5 text-sm leading-7" style={{ color: "rgba(246,241,231,0.72)" }}>
-                Instead of repeating small cards on pale backgrounds, the redesign frames outcomes with
-                contrast, sequencing, and stronger numerical emphasis.
+                Instead of repeating unsupported outcome claims, this panel now frames published school
+                information with contrast, sequencing, and stronger institutional emphasis.
               </p>
 
               <div className="mt-8 space-y-4">
                 {[
-                  "Formal dark presentation raises perceived credibility.",
-                  "Animated counters give movement without turning playful.",
-                  "The supporting panel explains what the numbers represent.",
+                  "Founded in 1987 by Mr. & Mrs. M Kikon.",
+                  "Affiliated to NBSE with Montessori through higher secondary Arts.",
+                  "Presented as a profile rather than an invented result sheet.",
                 ].map((item) => (
                   <div
                     key={item}
