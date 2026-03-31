@@ -41,6 +41,7 @@ export const NAV_LINKS = [
   { label: "Academics", href: "/pilgrim#academics" },
   { label: "Results", href: "/pilgrim#results" },
   { label: "Campus", href: "/pilgrim#campus" },
+  { label: "Services", href: "/pilgrim/services" },
   { label: "Philosophy", href: "/pilgrim#mission" },
   { label: "Events", href: "/pilgrim/events" },
   { label: "Admissions", href: "/pilgrim#admissions" },

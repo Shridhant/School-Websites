@@ -8,6 +8,12 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  const isActiveLink = (href: string) => {
+    if (href === "/pilgrim/events") return location.pathname.startsWith("/pilgrim/events");
+    if (href === "/pilgrim/services") return location.pathname.startsWith("/pilgrim/services");
+    return false;
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -53,10 +59,7 @@ export function Navbar() {
                 href={link.href}
                 className="ps-link-underline text-sm"
                 style={{
-                  color:
-                    location.pathname.startsWith("/pilgrim/events") && link.href === "/pilgrim/events"
-                      ? PS_COLORS.oxblood
-                      : PS_COLORS.navy,
+                  color: isActiveLink(link.href) ? PS_COLORS.oxblood : PS_COLORS.navy,
                 }}
               >
                 {link.label}

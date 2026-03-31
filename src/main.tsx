@@ -16,6 +16,7 @@ import RiverBelt from "./TestPages/RiverBelt";
 import Pilgrim from "./TestPages/Pilgrim";
 import PilgrimEvents from "./TestPages/PilgrimEvents";
 import PilgrimEventGallery from "./TestPages/PilgrimEventGallery";
+import PilgrimServices from "./TestPages/PilgrimServices";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
   {
     path: "/pilgrim/events/:slug",
     element: <PilgrimEventGallery />,
+  },
+  {
+    path: "/pilgrim/services",
+    element: <PilgrimServices />,
   },
 ]);
 

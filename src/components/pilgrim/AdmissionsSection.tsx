@@ -35,6 +35,28 @@ export function AdmissionsSection() {
                 secondary Arts admission, with document requirements and school-level screening.
               </p>
 
+              <div
+                className="mt-8 max-w-xl rounded-[26px] border px-5 py-5"
+                style={{
+                  borderColor: "rgba(201,164,92,0.24)",
+                  background: "rgba(252,250,245,0.08)",
+                }}
+              >
+                <p className="text-[11px] uppercase tracking-[0.3em]" style={{ color: "rgba(201,164,92,0.88)" }}>
+                  Admission Form PDF
+                </p>
+                <p className="mt-4 text-sm leading-7" style={{ color: "rgba(246,241,231,0.78)" }}>
+                  Downloading the admission form gives families a clearer starting point before visiting the school office.
+                  It helps parents review the expected information in advance, organise documents, and understand the tone
+                  of the admission process before formal submission.
+                </p>
+                <ul className="mt-4 space-y-2 text-sm" style={{ color: "rgba(246,241,231,0.72)" }}>
+                  <li>Review the form structure before your school visit.</li>
+                  <li>Prepare required details and supporting records more confidently.</li>
+                  <li>Use it as a reference while discussing eligibility with the school.</li>
+                </ul>
+              </div>
+
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                 <a href="#" className="ps-button-primary inline-flex items-center justify-center font-medium">
                   Apply Now
@@ -45,6 +67,18 @@ export function AdmissionsSection() {
                   style={{ borderColor: "rgba(201,164,92,0.3)", color: PS_COLORS.cream }}
                 >
                   Request Prospectus
+                </a>
+                <a
+                  href="/pgadmissionform/admission-fome-2020.pdf"
+                  download
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-full border px-6 py-3 text-sm font-medium"
+                  style={{
+                    borderColor: "rgba(201,164,92,0.3)",
+                    color: PS_COLORS.cream,
+                    background: "rgba(255,255,255,0.06)",
+                  }}
+                >
+                  Download Admission Form PDF
                 </a>
               </div>
             </div>
