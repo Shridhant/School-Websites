@@ -13,6 +13,7 @@ import RinchoAdmission from "./TestPages/RinchoAdmission";
 import RinchoEvents from "./TestPages/RinchoEvents";
 import RinchoEventDetails from "./TestPages/RinchoEventDetails";
 import RiverBelt from "./TestPages/RiverBelt";
+import Pilgrim from "./TestPages/Pilgrim";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: "/christina-memorial",
     element: <ChristinaMemorial />,
+  },
+  {
+    path: "/pilgrim",
+    element: <Pilgrim />,
   },
 ]);
 
