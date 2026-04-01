@@ -14,13 +14,12 @@ import RinchoEvents from "./TestPages/RinchoEvents";
 import RinchoEventDetails from "./TestPages/RinchoEventDetails";
 import RiverBelt from "./TestPages/RiverBelt";
 import Pilgrim from "./TestPages/Pilgrim";
-<<<<<<< Updated upstream
+
 import PilgrimEvents from "./TestPages/PilgrimEvents";
 import PilgrimEventGallery from "./TestPages/PilgrimEventGallery";
 import PilgrimServices from "./TestPages/PilgrimServices";
-=======
+
 import RichMount from "./TestPages/RichMount";
->>>>>>> Stashed changes
 
 const router = createBrowserRouter([
   {
@@ -70,7 +69,6 @@ const router = createBrowserRouter([
     element: <Pilgrim />,
   },
   {
-<<<<<<< Updated upstream
     path: "/pilgrim/events",
     element: <PilgrimEvents />,
   },
@@ -81,10 +79,10 @@ const router = createBrowserRouter([
   {
     path: "/pilgrim/services",
     element: <PilgrimServices />,
-=======
+  },
+  {
     path: "/rich-mount",
     element: <RichMount />,
->>>>>>> Stashed changes
   },
 ]);
 
